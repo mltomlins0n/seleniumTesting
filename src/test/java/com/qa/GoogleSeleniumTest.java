@@ -49,16 +49,4 @@ public class GoogleSeleniumTest {
         page.sendKeys(Keys.PAGE_DOWN);
         Thread.sleep(2000);
     }
-
-    @Test
-    public void seleniumEasyTest() throws InterruptedException {
-        driver.get("https://www.seleniumeasy.com/test/basic-first-form-demo.html");
-        Thread.sleep(1000);
-        WebElement inputField = driver.findElement(By.id("user-message"));
-        inputField.sendKeys("This is an automated message");
-        Thread.sleep(1000);
-        WebElement submitButton = driver.findElement(By.xpath("//*[@id=\"get-input\"]/button"));
-        submitButton.click();
-        Thread.sleep(2000);
-    }
 }
