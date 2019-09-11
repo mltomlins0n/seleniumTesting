@@ -132,7 +132,6 @@ public class SeleniumInputTest {
         WebElement dropDown = driver.findElement(By.id("select-demo"));
         Select select = new Select(dropDown);
         List<WebElement> dropDownOptions = select.getOptions();
-        select.
 
         for (WebElement option : dropDownOptions) {
             dropDown.click();
