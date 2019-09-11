@@ -5,8 +5,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 
 public class SeleniumInputTest {
 
@@ -39,6 +41,19 @@ public class SeleniumInputTest {
 
     @Test
     public void seleniumEasyTest2() throws InterruptedException {
+        WebElement firstInput = driver.findElementById("sum1");
+        WebElement secondInput = driver.findElementById("sum2");
+        WebElement submitButton = driver.findElementByXPath("//*[@id=\"gettotal\"]/button");
+        WebElement footer = driver.findElementByClassName("footer");
+
+        new Actions(driver).moveToElement(footer).perform();
+        Thread.sleep(1000);
+        firstInput.sendKeys(Keys.NUMPAD4, Keys.NUMPAD0);
+        Thread.sleep(1000);
+        secondInput.sendKeys((Keys.NUMPAD2));
+        Thread.sleep(1000);
+        submitButton.click();
+        Thread.sleep(3000);
 
     }
 }
