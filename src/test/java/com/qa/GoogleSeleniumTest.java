@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+
 public class GoogleSeleniumTest {
 
     private ChromeDriver driver;
@@ -12,13 +13,14 @@ public class GoogleSeleniumTest {
     @Before
     public void setUp() {
         System.setProperty(
-                "web.chrome.driver",
-                "resources/chromedriver.exe");
+                "webdriver.chrome.driver",
+                "src/test/java/resources/chromedriver.exe");
         driver = new ChromeDriver();
     }
 
     @After
-    public void tearDown() {
+    public void tearDown() throws InterruptedException {
+        Thread.sleep(3000);
         driver.close();
     }
 
