@@ -19,6 +19,7 @@ public class SeleniumInputTest {
                 "src/test/java/resources/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
+        driver.get("https://www.seleniumeasy.com/test/basic-first-form-demo.html");
     }
 
     @After
@@ -28,8 +29,6 @@ public class SeleniumInputTest {
 
     @Test
     public void seleniumEasyTest() throws InterruptedException {
-        driver.get("https://www.seleniumeasy.com/test/basic-first-form-demo.html");
-        Thread.sleep(1000);
         WebElement inputField = driver.findElement(By.id("user-message"));
         inputField.sendKeys("This is an automated message");
         Thread.sleep(1000);
