@@ -141,4 +141,29 @@ public class SeleniumInputTest {
         }
         Thread.sleep(2000);
     }
+
+    @Test
+    public void multiSelectListTest() throws InterruptedException {
+        driver.get("https://www.seleniumeasy.com/test/basic-select-dropdown-demo.html");
+        WebElement multiSelect = driver.findElement(By.id("multi-select"));
+        Select select = new Select(multiSelect);
+        List<WebElement> multiSelectOptions = select.getOptions();
+        WebElement firstButton = driver.findElement(By.id("printMe"));
+        WebElement allButton = driver.findElement(By.id("printAll"));
+        WebElement first = driver.findElement(By.xpath("//*[@id=\"multi-select\"]/option[1]"));
+        WebElement second = driver.findElement(By.xpath("//*[@id=\"multi-select\"]/option[2]"));
+
+        for (WebElement option : multiSelectOptions) {
+            option.click();
+            Thread.sleep(500);
+            firstButton.click();
+        }
+
+//        for (WebElement option : multiSelectOptions) {
+//            option.click();
+//            Thread.sleep(300);
+//        }
+//        allButton.click();
+//        Thread.sleep(2000);
+    }
 }
