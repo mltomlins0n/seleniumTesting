@@ -89,7 +89,19 @@ public class SeleniumInputTest {
             checkButton.click();
             Thread.sleep(1000);
         }
+    }
 
+    @Test
+    public void radioButtonTest() throws InterruptedException {
+        driver.get("https://www.seleniumeasy.com/test/basic-radiobutton-demo.html");
+        List<WebElement> radioButtonList = driver.findElementsByName("optradio");
+        WebElement submitButton = driver.findElementById("buttoncheck");
 
+        for (WebElement button : radioButtonList) {
+            button.click();
+            Thread.sleep(500);
+            submitButton.click();
+            Thread.sleep(500);
+        }
     }
 }
