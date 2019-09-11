@@ -9,6 +9,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 
 import javax.xml.xpath.XPath;
 import java.util.List;
@@ -123,5 +124,22 @@ public class SeleniumInputTest {
             }
         }
         submitButton.click();
+    }
+
+    @Test
+    public void selectListTest() throws InterruptedException {
+        driver.get("https://www.seleniumeasy.com/test/basic-select-dropdown-demo.html");
+        WebElement dropDown = driver.findElement(By.id("select-demo"));
+        Select select = new Select(dropDown);
+        List<WebElement> dropDownOptions = select.getOptions();
+        select.
+
+        for (WebElement option : dropDownOptions) {
+            dropDown.click();
+            Thread.sleep(200);
+            option.click();
+            Thread.sleep(200);
+        }
+        Thread.sleep(2000);
     }
 }
