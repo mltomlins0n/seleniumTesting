@@ -115,10 +115,10 @@ public class SeleniumInputTest {
 
         for (WebElement gButton : genderButtons) {
             gButton.click();
-            Thread.sleep(1000);
+            Thread.sleep(500);
             for (WebElement aButton : ageButtons) {
                 aButton.click();
-                Thread.sleep(1000);
+                Thread.sleep(500);
                 submitButton.click();
             }
         }
