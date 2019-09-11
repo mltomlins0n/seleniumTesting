@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 
+import javax.xml.xpath.XPath;
 import java.util.List;
 
 public class SeleniumInputTest {
@@ -103,5 +104,24 @@ public class SeleniumInputTest {
             submitButton.click();
             Thread.sleep(500);
         }
+    }
+
+    @Test
+    public void groupRadioButtonsTest() throws InterruptedException {
+        driver.get("https://www.seleniumeasy.com/test/basic-radiobutton-demo.html");
+        List<WebElement> genderButtons = driver.findElementsByName("gender");
+        List<WebElement> ageButtons = driver.findElementsByName("ageGroup");
+        WebElement submitButton = driver.findElement(By.xpath("//*[@id=\"easycont\"]/div/div[2]/div[2]/div[2]/button"));
+
+        for (WebElement gButton : genderButtons) {
+            gButton.click();
+            Thread.sleep(1000);
+            for (WebElement aButton : ageButtons) {
+                aButton.click();
+                Thread.sleep(1000);
+                submitButton.click();
+            }
+        }
+        submitButton.click();
     }
 }
