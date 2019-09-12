@@ -33,7 +33,6 @@ public class SeleniumScreenshotTest {
 
         File srcFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
         System.out.println(srcFile.getAbsolutePath());
-        srcFile.getAbsoluteFile();
         Thread.sleep(1000);
     }
 }
