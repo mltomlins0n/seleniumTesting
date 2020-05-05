@@ -4,14 +4,19 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class GoogleSeleniumTest {
 
-    private ChromeDriver driver;
+    private WebDriver driver;
+    JavascriptExecutor js;
 
     @Before
     public void setUp() {
@@ -20,33 +25,32 @@ public class GoogleSeleniumTest {
                 "src/test/java/resources/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
+        // Allows script execution such as scrolling a window
+        js = (JavascriptExecutor) driver;
     }
 
     @After
     public void tearDown() {
-        driver.close();
+        driver.quit();
     }
 
     @Test
     public void searchTest() throws InterruptedException {
         driver.get("http://www.google.com");
-        Thread.sleep(500);
         WebElement searchField = driver.findElement(By.name("q"));
-        searchField.sendKeys("funny cat pictures");
-        Thread.sleep(500);
+        searchField.sendKeys("funny cat pics");
         searchField.sendKeys(Keys.ENTER);
         //WebElement submitButton = driver.findElement(By.name("btnK"));
         //submitButton.click();
-        Thread.sleep(500);
-        WebElement linkToTestingResult = driver.findElementByLinkText(
-                "Images for funny cat");
+        WebElement linkToTestingResult = driver.findElement(By.linkText("Images for funny cat"));
         linkToTestingResult.click();
-        Thread.sleep(500);
-        WebElement catPic = driver.findElement(By.id("xY4xU-n5chBuNM:"));
-        catPic.click();
-        Thread.sleep(500);
-        WebElement page = driver.findElement(By.id("gsr")); // get html body
-        page.sendKeys(Keys.PAGE_DOWN);
-        Thread.sleep(2000);
+        js.executeScript("window.scrollTo(0,1281)");
+        { // Wait until element is visible on screen
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(
+            "#islrg > div.islrc > div:nth-child(53) > a.wXeWr.islib.nfEiy.mM5pbd > div.bRMDJf.islir > img")));
+        } // Find and click on element
+        driver.findElement(By.cssSelector(
+            "#islrg > div.islrc > div:nth-child(53) > a.wXeWr.islib.nfEiy.mM5pbd > div.bRMDJf.islir > img")).click();
     }
 }
