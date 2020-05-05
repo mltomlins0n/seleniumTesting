@@ -4,3 +4,4 @@ target
 *.classpath
 *.prefs
 .project
+Selenium IDE Tests
