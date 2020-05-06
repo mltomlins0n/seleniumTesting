@@ -147,11 +147,13 @@ public class SeleniumInputTest {
         Select select = new Select(multiSelect);
         List<WebElement> multiSelectOptions = select.getOptions();
         WebElement firstButton = driver.findElement(By.id("printMe"));
+        WebElement allButton = driver.findElement(By.id("printAll"));
 
         for (WebElement option : multiSelectOptions) {
             option.click();
             Thread.sleep(500);
             firstButton.click();
+            allButton.click();
         }
     }
 }
