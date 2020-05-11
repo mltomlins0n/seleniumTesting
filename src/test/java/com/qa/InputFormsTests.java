@@ -336,10 +336,25 @@ public class InputFormsTests {
     searchBox.sendKeys("Invalid search term");
     assertThat(driver.findElement(By.cssSelector("#select2-country-results > li")).getText(), is("No results found"));
     
-    // TODO - Automate Select Multiple Values
+    // Automate Select Multiple Values
     WebElement stateSearchBox = driver.findElement(By.cssSelector(
-      "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div:nth-child(3) > div > div.panel-body > span > span.selection > span > ul > li > input"));
+      "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div:nth-child(3) > div > div.panel-body > span > span.selection > span"));
     stateSearchBox.click();
+
+    // List <WebElement> statesList = driver.findElements(By.className("select2-results__option"));
+    // // Allows you to get a dynamic element, such as ID, after pageload
+    // for (WebElement state : statesList) {
+    //   String stateID = state.getAttribute("id");
+    //   System.out.println(stateID);
+    // }
+
+    // Using full XPath as a last resort
+    driver.findElement(By.xpath("/html/body/span/span/span/ul/li[5]")).click();
+    stateSearchBox.click();
+    driver.findElement(By.xpath("/html/body/span/span/span/ul/li[16]")).click();
+    stateSearchBox.click();
+    driver.findElement(By.xpath("/html/body/span/span/span/ul/li[26]")).click();
+    
 
     // TODO - Automate Drop Down with Disabled Values
 
