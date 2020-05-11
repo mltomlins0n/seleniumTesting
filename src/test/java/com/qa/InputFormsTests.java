@@ -357,6 +357,19 @@ public class InputFormsTests {
     
 
     // TODO - Automate Drop Down with Disabled Values
+    
+    // This gets the first dropdown arrow on the page, use XPath instead?
+    WebElement dropdownID = driver.findElement(By.className("select2-selection__arrow"));
+    dropdownID.click();
+
+    List <WebElement> territoriesList = driver.findElements(By.className("select2-results__option"));
+
+    for (WebElement territory : territoriesList) {
+      if (territory.getAttribute("selected") == "true") {
+        territory.click();
+      }
+      System.out.println(territory.getText());
+    }
 
     driver.findElement(By.id("files")).click();
     {
