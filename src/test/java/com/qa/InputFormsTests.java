@@ -356,11 +356,13 @@ public class InputFormsTests {
     driver.findElement(By.xpath("/html/body/span/span/span/ul/li[26]")).click();
     
 
-    // TODO - Automate Drop Down with Disabled Values
-    
-    // This gets the first dropdown arrow on the page, use XPath instead?
-    WebElement dropdownID = driver.findElement(By.className("select2-selection__arrow"));
+    // Automate Drop Down with Disabled Values
+    WebElement dropdownID = driver.findElement(By.xpath(
+      "/html/body/div[2]/div/div[2]/div[3]/div/div[2]/span/span[1]/span/span[2]"));
     dropdownID.click();
+    WebElement option = driver.findElement(By.xpath(
+      "/html/body/span/span/span[2]/ul/li[3]"));
+    option.click();
 
     List <WebElement> territoriesList = driver.findElements(By.className("select2-results__option"));
 
