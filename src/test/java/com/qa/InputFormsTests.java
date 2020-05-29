@@ -355,7 +355,6 @@ public class InputFormsTests {
     driver.findElement(By.xpath("/html/body/span/span/span/ul/li[16]")).click();
     stateSearchBox.click();
     driver.findElement(By.xpath("/html/body/span/span/span/ul/li[26]")).click();
-    
 
     // Automate Drop Down with Disabled Values
     WebElement dropdownID = driver.findElement(By.xpath(
