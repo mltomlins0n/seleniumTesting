@@ -20,6 +20,7 @@ import static org.hamcrest.CoreMatchers.is;
 public class InputFormsTests {
   private WebDriver driver;
   JavascriptExecutor js;
+  
   @Before
   public void setUp() {
     System.setProperty(
