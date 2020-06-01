@@ -183,4 +183,62 @@ public class DatePickerTests {
     driver.findElement(By.cssSelector(".datepicker-days .prev")).click();
     driver.findElement(By.cssSelector("tr:nth-child(2) > .day:nth-child(2)")).click();
   }
+
+  // JQuery Date Picker Tests
+  @Test
+  public void oneWeekRange() {
+    driver.get("https://www.seleniumeasy.com/test/jquery-date-picker-demo.html");
+    driver.findElement(By.id("from")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-w")).click();
+    driver.findElement(By.linkText("1")).click();
+    driver.findElement(By.id("to")).click();
+    driver.findElement(By.linkText("8")).click();
+  }
+  @Test
+  public void backForthArrows() {
+    driver.get("https://www.seleniumeasy.com/test/jquery-date-picker-demo.html");
+  
+    driver.findElement(By.id("from")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-w")).click();
+    driver.findElement(By.linkText("1")).click();
+    driver.findElement(By.id("to")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-e")).click();
+    driver.findElement(By.linkText("1")).click();
+  }
+  @Test
+  public void oneYearRange() {
+    driver.get("https://www.seleniumeasy.com/test/jquery-date-picker-demo.html");
+    driver.findElement(By.id("from")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-w")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-w")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-w")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-w")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-w")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-w")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-w")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-w")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-w")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-w")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-w")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-w")).click();
+    driver.findElement(By.linkText("1")).click();
+    driver.findElement(By.id("to")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-e")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-e")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-e")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-e")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-e")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-e")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-e")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-e")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-e")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-e")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-e")).click();
+    driver.findElement(By.cssSelector(".ui-icon-circle-triangle-e")).click();
+    driver.findElement(By.linkText("1")).click();
+
+    WebElement element = driver.findElement(By.linkText("1"));
+    element.click();
+  }
+
 }
