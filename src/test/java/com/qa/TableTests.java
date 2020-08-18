@@ -1,5 +1,7 @@
 package com.qa;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +32,7 @@ public class TableTests {
 
     // Table Tests
     @Test
-    public void PaginationTest() {
+    public void paginationTest() {
         driver.get("https://www.seleniumeasy.com/test/table-pagination-demo.html");
         driver.findElement(By.linkText("»")).click();
 
@@ -47,4 +49,27 @@ public class TableTests {
         driver.findElement(By.linkText("2")).click();
         driver.findElement(By.linkText("1")).click();
     }
+
+    @Test
+    public void tableSearch1() {
+        driver.get("https://www.seleniumeasy.com/test/table-search-filter-demo.html");
+
+        WebElement table1 = driver.findElement(By.id("task-table"));
+        WebElement table1Body = table1.findElement(By.tagName("tbody"));
+        List<WebElement> tableRows = table1Body.findElements(By.tagName("tr"));
+
+        //int trCount = 0;
+        //for(WebElement tr : tableRows) {
+        //    trCount++;
+        //    System.out.println("table data: " + trCount + tr);
+        //}
+
+        WebElement searchField = driver.findElement(By.id("task-table-filter"));
+        searchField.click();
+        searchField.sendKeys("1");
+        // assert that only one row is visible
+        WebElement result = driver.findElement(By.cssSelector("#task-table > tbody > tr:nth-child(1)"));
+        assertNotNull(result);
+    }
+
 }
