@@ -231,22 +231,17 @@ public class DatePickerTests {
   public void Days() {
     driver.get("https://www.seleniumeasy.com/test/jquery-date-picker-demo.html");
     driver.findElement(By.id("from")).click();
-
-    WebElement daysTable = driver.findElement(By.tagName("tbody"));
-    List <WebElement> daysList = daysTable.findElements(By.tagName("td"));
-
-    // Instead of looping through, pick a random date in the range
-    // each time the test is run
-    // Assign a "day" to a WebElement
-    // Select a random day and click it
-
+    WebElement prev = driver.findElement(By.cssSelector(".ui-icon-circle-triangle-w"));
+    prev.click();
+    // Generate a random day of the month
     Random rand = new Random();
     int randomDate = rand.nextInt(31) + 1;
-
-    //WebElement day = ???
-
-    if (!(day.getAttribute("innerHTML").equals("&nbsp;"))) {
-
+    // Find a random day to click
+    WebElement targetDay = driver.findElement(By.linkText(Integer.toString(randomDate)));
+    // Only click if element exists on the page
+    if (!(targetDay.getAttribute("innerHTML").equals("&nbsp;"))) {
+    targetDay.click();
     }
+    System.out.println("date clicked: " + Integer.toString(randomDate));
   }
 }
