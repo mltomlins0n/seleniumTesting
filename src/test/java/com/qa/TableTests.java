@@ -25,6 +25,7 @@ public class TableTests {
       driver = new ChromeDriver();
       driver.manage().window().maximize();
       js = (JavascriptExecutor) driver;
+      driver.get("https://www.seleniumeasy.com/test/table-search-filter-demo.html");
     }
     @After
     public void tearDown() {
@@ -34,7 +35,6 @@ public class TableTests {
     // Table Tests
     @Test
     public void paginationTest() {
-        driver.get("https://www.seleniumeasy.com/test/table-pagination-demo.html");
         driver.findElement(By.linkText("»")).click();
 
         List<WebElement> elements = driver.findElements(By.linkText("«"));
@@ -52,8 +52,6 @@ public class TableTests {
     }
     @Test
     public void filterNumber() {
-        driver.get("https://www.seleniumeasy.com/test/table-search-filter-demo.html");
-
         WebElement table1 = driver.findElement(By.id("task-table"));
         WebElement table1Body = table1.findElement(By.tagName("tbody"));
         List<WebElement> tableRows = table1Body.findElements(By.tagName("tr"));
@@ -73,6 +71,10 @@ public class TableTests {
           }
         }
         assert tableResults.size() == 1;
+    }
+    @Test
+    public void filterTask() {
+      
     }
 
 }
