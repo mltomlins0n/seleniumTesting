@@ -56,25 +56,46 @@ public class TableTests {
         WebElement table1Body = table1.findElement(By.tagName("tbody"));
         List<WebElement> tableRows = table1Body.findElements(By.tagName("tr"));
 
-        WebElement searchField = driver.findElement(By.id("task-table-filter"));
-        searchField.click();
-        searchField.sendKeys("1");
-        // assert that only one row is visible
-        WebElement result = driver.findElement(By.cssSelector("#task-table > tbody > tr:nth-child(1)"));
-        assertNotNull(result);
-        // New list to store the query results
-        List<WebElement> tableResults = new ArrayList<>();
-        for(WebElement tr : tableRows) {
-          if (tr.isDisplayed()) {
-            tableResults.add(tr);
-            System.out.println("table data: " + tableResults);
-          }
-        }
-        assert tableResults.size() == 1;
+        filterTable("1");
+
+        generateResultsList(tableRows, 1);
     }
     @Test
     public void filterTask() {
-      
-    }
+      WebElement table1 = driver.findElement(By.id("task-table"));
+      WebElement table1Body = table1.findElement(By.tagName("tbody"));
+      List<WebElement> tableRows = table1Body.findElements(By.tagName("tr"));
 
+      filterTable("wire");
+
+      generateResultsList(tableRows, 1);
+
+    }
+    // Creates a new list of elements that can be used in an assert()
+    // by looping through an existing list.
+    // Also asserts the elements exist and are not null.
+    // Params:
+    //     List list, the list to loop through
+    //     and compare elements to add to the new list
+    //     int comparator, the num to use in the assert statement
+    //     to check the size of the new list
+    public void generateResultsList(List<WebElement> list, int comparator) {
+      List<WebElement> tableResults = new ArrayList<>();
+      for(WebElement tr : list) {
+        if (tr.isDisplayed()) {
+          tableResults.add(tr);
+          System.out.println("table data: " + tr.getAttribute("innerText"));
+        }
+      }
+      assert tableResults.size() >= comparator;
+      assertNotNull(tableResults.get(0));
+    }
+    // Gets the search field from the page and enters a search term
+    // Params:
+    //     String searchTerm, the keys to send to the search field
+    public void filterTable(String searchTerm) {
+      WebElement searchField = driver.findElement(By.id("task-table-filter"));
+      searchField.click();
+      searchField.sendKeys(searchTerm);
+    }
 }
