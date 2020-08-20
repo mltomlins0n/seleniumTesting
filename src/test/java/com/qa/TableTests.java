@@ -57,15 +57,10 @@ public class TableTests {
         WebElement table1Body = table1.findElement(By.tagName("tbody"));
         List<WebElement> tableRows = table1Body.findElements(By.tagName("tr"));
 
-        filterTable("1");
-        filterTable("2");
-        filterTable("3");
-        filterTable("4");
-        filterTable("5");
-        filterTable("6");
-        filterTable("7");
-
-        generateResultsList(tableRows, 1);
+        for (int i = 0; i < tableRows.size(); i++) {
+          filterTableID("task-table-filter", Integer.toString(i+1));
+          generateResultsList(tableRows, 1);  
+        }
     }
     @Test
     public void filterTask() {
@@ -73,19 +68,19 @@ public class TableTests {
       WebElement table1Body = table1.findElement(By.tagName("tbody"));
       List<WebElement> tableRows = table1Body.findElements(By.tagName("tr"));
 
-      filterTable("wire");
+      filterTableID("task-table-filter", "wire");
       generateResultsList(tableRows, 1);
-      filterTable("land");
+      filterTableID("task-table-filter", "land");
       generateResultsList(tableRows, 1);
-      filterTable("seo");
+      filterTableID("task-table-filter", "seo");
       generateResultsList(tableRows, 1);
-      filterTable("bootstrap");
+      filterTableID("task-table-filter", "bootstrap");
       generateResultsList(tableRows, 1);
-      filterTable("jQuery");
+      filterTableID("task-table-filter", "jQuery");
       generateResultsList(tableRows, 1);
-      filterTable("browser");
+      filterTableID("task-table-filter", "browser");
       generateResultsList(tableRows, 1);
-      filterTable("bug");
+      filterTableID("task-table-filter", "bug");
       generateResultsList(tableRows, 1);
 
     }
@@ -95,19 +90,19 @@ public class TableTests {
       WebElement table1Body = table1.findElement(By.tagName("tbody"));
       List<WebElement> tableRows = table1Body.findElements(By.tagName("tr"));
 
-      filterTable("john");
+      filterTableID("task-table-filter", "john");
       generateResultsList(tableRows, 2);
-      filterTable("mike");
+      filterTableID("task-table-filter", "mike");
       generateResultsList(tableRows, 1);
-      filterTable("loblab");
+      filterTableID("task-table-filter", "loblab");
       generateResultsList(tableRows, 1);
-      filterTable("emily");
+      filterTableID("task-table-filter", "emily");
       generateResultsList(tableRows, 1);
-      filterTable("holden");
+      filterTableID("task-table-filter", "holden");
       generateResultsList(tableRows, 1);
-      filterTable("jane doe");
+      filterTableID("task-table-filter", "jane doe");
       generateResultsList(tableRows, 1);
-      filterTable("kilgore");
+      filterTableID("task-table-filter", "kilgore");
       generateResultsList(tableRows, 1);
     }
     @Test
@@ -116,11 +111,11 @@ public class TableTests {
       WebElement table1Body = table1.findElement(By.tagName("tbody"));
       List<WebElement> tableRows = table1Body.findElements(By.tagName("tr"));
 
-      filterTable("in progress");
+      filterTableID("task-table-filter", "in progress");
       generateResultsList(tableRows, 3);
-      filterTable("completed");
+      filterTableID("task-table-filter", "completed");
       generateResultsList(tableRows, 1);
-      filterTable("failed QA");
+      filterTableID("task-table-filter", "failed QA");
       generateResultsList(tableRows, 1);
     }
     // Second table tests
@@ -216,7 +211,7 @@ public class TableTests {
     @Test
     public void tableFilter() {
       driver.get("https://www.seleniumeasy.com/test/table-records-filter-demo.html#");
-      
+
       driver.findElement(By.cssSelector(".btn-success")).click();
       // TODO - create a list of results and check that it's populated by valid results
       driver.findElement(By.cssSelector(".btn-warning")).click();
@@ -225,6 +220,7 @@ public class TableTests {
 
       driver.findElement(By.cssSelector(".btn-default")).click();
     }
+
     // Creates a new list of elements that can be used in an assert()
     // by looping through an existing list.
     // Also asserts the elements exist and are not null.
@@ -246,9 +242,10 @@ public class TableTests {
     }
     // Gets the search field from the page and enters a search term
     // Params:
+    //     String searchFieldID, the ID of the searchfield to use
     //     String searchTerm, the keys to send to the search field
-    public void filterTable(String searchTerm) {
-      WebElement searchField = driver.findElement(By.id("task-table-filter"));
+    public void filterTableID(String searchFieldID, String searchTerm) {
+      WebElement searchField = driver.findElement(By.id(searchFieldID));
       searchField.click();
       searchField.clear();
       searchField.sendKeys(searchTerm);
