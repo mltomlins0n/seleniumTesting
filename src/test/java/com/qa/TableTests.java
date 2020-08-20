@@ -212,6 +212,19 @@ public class TableTests {
       filterTableCSS("th:nth-child(4) > .form-control", "dimarison");
       generateResultsList(table2Rows, 1);
     }
+    // Table Filter Tests
+    @Test
+    public void tableFilter() {
+      driver.get("https://www.seleniumeasy.com/test/table-records-filter-demo.html#");
+      
+      driver.findElement(By.cssSelector(".btn-success")).click();
+      // TODO - create a list of results and check that it's populated by valid results
+      driver.findElement(By.cssSelector(".btn-warning")).click();
+
+      driver.findElement(By.cssSelector(".btn-danger")).click();
+
+      driver.findElement(By.cssSelector(".btn-default")).click();
+    }
     // Creates a new list of elements that can be used in an assert()
     // by looping through an existing list.
     // Also asserts the elements exist and are not null.
