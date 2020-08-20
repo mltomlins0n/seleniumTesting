@@ -137,18 +137,80 @@ public class TableTests {
 
       filterTableCSS("th:nth-child(1) > .form-control", "1");
       generateResultsList(table2Rows, 1);
+      filterTableCSS("th:nth-child(1) > .form-control", "2");
+      generateResultsList(table2Rows, 1);
+      filterTableCSS("th:nth-child(1) > .form-control", "3");
+      generateResultsList(table2Rows, 1);
+      filterTableCSS("th:nth-child(1) > .form-control", "4");
+      generateResultsList(table2Rows, 1);
+      filterTableCSS("th:nth-child(1) > .form-control", "5");
+      generateResultsList(table2Rows, 1);
+    }
+    @Test
+    public void filterUser() {
+      WebElement filterButton = driver.findElement
+      (By.xpath("/html/body/div[2]/div/div[2]/div[2]/div/div/div/button"));
+      filterButton.click();
 
-      //WebElement userField = driver.findElement(By.cssSelector("th:nth-child(2) > .form-control"));
-      //userField.click();
-      //userField.sendKeys("mark");
-      
-      //WebElement firstNameField = driver.findElement(By.cssSelector("th:nth-child(3) > .form-control"));
-      //firstNameField.click();
-      //firstNameField.sendKeys("zieko");
-      
-      //WebElement lastNameField = driver.findElement(By.cssSelector("th:nth-child(4) > .form-control"));
-      //lastNameField.click();
-      //lastNameField.sendKeys("samuels");
+      WebElement table2 = driver.findElement(By.xpath
+      ("/html/body/div[2]/div/div[2]/div[2]/div/table"));
+      WebElement table2Body = table2.findElement(By.tagName("tbody"));
+      List<WebElement> table2Rows = table2Body.findElements(By.tagName("tr"));
+
+      filterTableCSS("th:nth-child(2) > .form-control", "mark");
+      generateResultsList(table2Rows, 1);
+      filterTableCSS("th:nth-child(2) > .form-control", "jacobs");
+      generateResultsList(table2Rows, 1);
+      filterTableCSS("th:nth-child(2) > .form-control", "larrypt");
+      generateResultsList(table2Rows, 1);
+      filterTableCSS("th:nth-child(2) > .form-control", "mikesali");
+      generateResultsList(table2Rows, 1);
+      filterTableCSS("th:nth-child(2) > .form-control", "chrisford");
+      generateResultsList(table2Rows, 1);
+    }
+    @Test
+    public void filterFirstName() {
+      WebElement filterButton = driver.findElement
+      (By.xpath("/html/body/div[2]/div/div[2]/div[2]/div/div/div/button"));
+      filterButton.click();
+
+      WebElement table2 = driver.findElement(By.xpath
+      ("/html/body/div[2]/div/div[2]/div[2]/div/table"));
+      WebElement table2Body = table2.findElement(By.tagName("tbody"));
+      List<WebElement> table2Rows = table2Body.findElements(By.tagName("tr"));
+
+      filterTableCSS("th:nth-child(3) > .form-control", "zieko");
+      generateResultsList(table2Rows, 1);
+      filterTableCSS("th:nth-child(3) > .form-control", "daniel");
+      generateResultsList(table2Rows, 1);
+      filterTableCSS("th:nth-child(3) > .form-control", "brigade");
+      generateResultsList(table2Rows, 1);
+      filterTableCSS("th:nth-child(3) > .form-control", "byron");
+      generateResultsList(table2Rows, 1);
+      filterTableCSS("th:nth-child(3) > .form-control", "rajano");
+      generateResultsList(table2Rows, 1);
+    }
+    @Test
+    public void filterLastName() {
+      WebElement filterButton = driver.findElement
+      (By.xpath("/html/body/div[2]/div/div[2]/div[2]/div/div/div/button"));
+      filterButton.click();
+
+      WebElement table2 = driver.findElement(By.xpath
+      ("/html/body/div[2]/div/div[2]/div[2]/div/table"));
+      WebElement table2Body = table2.findElement(By.tagName("tbody"));
+      List<WebElement> table2Rows = table2Body.findElements(By.tagName("tr"));
+
+      filterTableCSS("th:nth-child(4) > .form-control", "samuels");
+      generateResultsList(table2Rows, 1);
+      filterTableCSS("th:nth-child(4) > .form-control", "karano");
+      generateResultsList(table2Rows, 1);
+      filterTableCSS("th:nth-child(4) > .form-control", "swarroon");
+      generateResultsList(table2Rows, 1);
+      filterTableCSS("th:nth-child(4) > .form-control", "kathaniko");
+      generateResultsList(table2Rows, 1);
+      filterTableCSS("th:nth-child(4) > .form-control", "dimarison");
+      generateResultsList(table2Rows, 1);
     }
     // Creates a new list of elements that can be used in an assert()
     // by looping through an existing list.
@@ -163,7 +225,7 @@ public class TableTests {
       for(WebElement tr : list) {
         if (tr.isDisplayed()) {
           tableResults.add(tr);
-          System.out.println("table data: " + tr.getAttribute("innerText"));
+          System.out.println("Table Data: " + tr.getAttribute("innerText"));
         }
       }
       assert tableResults.size() >= comparator;
