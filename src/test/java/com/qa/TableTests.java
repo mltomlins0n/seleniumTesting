@@ -123,6 +123,33 @@ public class TableTests {
       filterTable("failed QA");
       generateResultsList(tableRows, 1);
     }
+    // Second table tests
+    @Test
+    public void filterNumber2() {
+      WebElement filterButton = driver.findElement
+      (By.xpath("/html/body/div[2]/div/div[2]/div[2]/div/div/div/button"));
+      filterButton.click();
+
+      WebElement table2 = driver.findElement(By.xpath
+      ("/html/body/div[2]/div/div[2]/div[2]/div/table"));
+      WebElement table2Body = table2.findElement(By.tagName("tbody"));
+      List<WebElement> table2Rows = table2Body.findElements(By.tagName("tr"));
+
+      filterTableCSS("th:nth-child(1) > .form-control", "1");
+      generateResultsList(table2Rows, 1);
+
+      //WebElement userField = driver.findElement(By.cssSelector("th:nth-child(2) > .form-control"));
+      //userField.click();
+      //userField.sendKeys("mark");
+      
+      //WebElement firstNameField = driver.findElement(By.cssSelector("th:nth-child(3) > .form-control"));
+      //firstNameField.click();
+      //firstNameField.sendKeys("zieko");
+      
+      //WebElement lastNameField = driver.findElement(By.cssSelector("th:nth-child(4) > .form-control"));
+      //lastNameField.click();
+      //lastNameField.sendKeys("samuels");
+    }
     // Creates a new list of elements that can be used in an assert()
     // by looping through an existing list.
     // Also asserts the elements exist and are not null.
@@ -147,6 +174,16 @@ public class TableTests {
     //     String searchTerm, the keys to send to the search field
     public void filterTable(String searchTerm) {
       WebElement searchField = driver.findElement(By.id("task-table-filter"));
+      searchField.click();
+      searchField.clear();
+      searchField.sendKeys(searchTerm);
+    }
+    // Gets the search field from the page and enters a search term
+    // Params:
+    //     String selector, the css selector used to find the element
+    //     String searchTerm, the keys to send to the search field
+    public void filterTableCSS(String selector, String searchTerm) {
+      WebElement searchField = driver.findElement(By.cssSelector(selector));
       searchField.click();
       searchField.clear();
       searchField.sendKeys(searchTerm);
