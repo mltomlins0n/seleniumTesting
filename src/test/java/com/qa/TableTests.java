@@ -10,6 +10,8 @@ import static org.junit.Assert.assertNotNull;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -212,13 +214,23 @@ public class TableTests {
     public void tableFilter() {
       driver.get("https://www.seleniumeasy.com/test/table-records-filter-demo.html#");
 
+      WebElement table = driver.findElement(By.xpath
+      ("/html/body/div[2]/div/div[2]/section/div/div/div[2]/div[2]/table"));
+      WebElement tableBody = table.findElement(By.tagName("tbody"));
+      List<WebElement> tableRows = tableBody.findElements(By.tagName("tr"));
+
       driver.findElement(By.cssSelector(".btn-success")).click();
-      // TODO - create a list of results and check that it's populated by valid results
+      generateResultsList(tableRows, 1);
       driver.findElement(By.cssSelector(".btn-warning")).click();
-
+      generateResultsList(tableRows, 1);
       driver.findElement(By.cssSelector(".btn-danger")).click();
-
+      generateResultsList(tableRows, 1);
       driver.findElement(By.cssSelector(".btn-default")).click();
+
+      WebDriverWait wait = new WebDriverWait(driver, 10);
+      // Wait until all table rows are fully visible
+      wait.until(ExpectedConditions.visibilityOfAllElements(tableRows));
+      generateResultsList(tableRows, 1);
     }
 
     // Creates a new list of elements that can be used in an assert()
