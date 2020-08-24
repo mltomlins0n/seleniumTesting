@@ -6,15 +6,17 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.After;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
-import org.openqa.selenium.JavascriptExecutor;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 public class TableTests {
     private WebDriver driver;
@@ -231,7 +233,7 @@ public class TableTests {
       generateResultsList(tableRows, 1);
       driver.findElement(By.cssSelector(".btn-default")).click();
 
-      WebDriverWait wait = new WebDriverWait(driver, 10);
+      WebDriverWait wait = new WebDriverWait(driver, 5);
       // Wait until all table rows are fully visible
       wait.until(ExpectedConditions.visibilityOfAllElements(tableRows));
       generateResultsList(tableRows, 1);
@@ -281,6 +283,63 @@ public class TableTests {
       List<WebElement> table100Rows = tableBody.findElements(By.tagName("tr"));
       generateResultsList(table100Rows, table100Rows.size());
     }
+    @Test
+    public void tableSortTest() {
+      // TODO - assert that the top of the sorted table has x value each time the table is sorted
+      driver.get("https://www.seleniumeasy.com/test/table-sort-search-demo.html");
+      driver.findElement(By.cssSelector(".sorting_asc")).click();
+      driver.findElement(By.cssSelector(".sorting_desc")).click();
+      driver.findElement(By.cssSelector(".sorting:nth-child(2)")).click();
+      driver.findElement(By.cssSelector(".sorting_asc")).click();
+      driver.findElement(By.cssSelector(".sorting:nth-child(3)")).click();
+      driver.findElement(By.cssSelector(".sorting_asc")).click();
+      driver.findElement(By.cssSelector(".sorting:nth-child(4)")).click();
+      driver.findElement(By.cssSelector(".sorting_asc")).click();
+      driver.findElement(By.cssSelector(".sorting:nth-child(5)")).click();
+      driver.findElement(By.cssSelector(".sorting_asc")).click();
+      driver.findElement(By.cssSelector(".sorting:nth-child(6)")).click();
+      driver.findElement(By.cssSelector(".sorting_asc")).click();
+    }
+    @Test
+    public void tableSearchTest() {
+      driver.get("https://www.seleniumeasy.com/test/table-sort-search-demo.html");
+      WebElement dropdown = driver.findElement(By.name("example_length"));
+      WebElement table = driver.findElement(By.id("example"));
+      WebElement tableBody = table.findElement(By.tagName("tbody"));
+      
+      dropdown.click();
+      dropdown.findElement(By.xpath("//option[. = '100']")).click();
+      
+      filterTableCSS("input", "cox");
+      List<WebElement> nameFilterResults = tableBody.findElements(By.tagName("tr"));
+      generateResultsList(nameFilterResults, 1);
+
+      filterTableCSS("input", "accountant");
+      List<WebElement> posFilterResults = tableBody.findElements(By.tagName("tr"));
+      generateResultsList(posFilterResults, 1);
+
+      filterTableCSS("input", "dev");
+      List<WebElement> posFilterResults2 = tableBody.findElements(By.tagName("tr"));
+      generateResultsList(posFilterResults2, 1);
+
+      filterTableCSS("input", "30");
+      List<WebElement> ageFilterResults1 = tableBody.findElements(By.tagName("tr"));
+      generateResultsList(ageFilterResults1, 1);
+
+      filterTableCSS("input", "08");
+      List<WebElement> sdateFilterResults = tableBody.findElements(By.tagName("tr"));
+      generateResultsList(sdateFilterResults, 1);
+
+      filterTableCSS("input", "85,");
+      List<WebElement> salaryFilterResults = tableBody.findElements(By.tagName("tr"));
+      generateResultsList(salaryFilterResults, 1);
+
+      filterTableCSS("input", "wasd");
+      List<WebElement> nonsenseFilterResults = tableBody.findElements(By.tagName("tr"));
+      generateResultsList(nonsenseFilterResults, 1);
+      WebElement noResult = nonsenseFilterResults.get(0);
+      assertTrue("Are you sure there aren't results?", noResult.getText().equals("No matching records found"));
+  }
     // Creates a new list of elements that can be used in an assert()
     // by looping through an existing list.
     // Also asserts the elements exist and are not null.
