@@ -253,7 +253,34 @@ public class TableTests {
       driver.findElement(By.linkText("2")).click();
       driver.findElement(By.linkText("1")).click();
     }
+    @Test
+    public void tableQuantityTest() {
+      driver.get("https://www.seleniumeasy.com/test/table-sort-search-demo.html");
+      WebElement dropdown = driver.findElement(By.name("example_length"));
+      WebElement table = driver.findElement(By.id("example"));
+      WebElement tableBody = table.findElement(By.tagName("tbody"));
+      List<WebElement> tableRows = tableBody.findElements(By.tagName("tr"));
 
+      // Verify that initial table has 10 rows
+      generateResultsList(tableRows, 10);
+      dropdown.click();
+      dropdown.findElement(By.xpath("//option[. = '25']")).click();
+      // Get a new list of the table rows
+      List<WebElement> table25Rows = tableBody.findElements(By.tagName("tr"));
+      generateResultsList(table25Rows, 25);
+
+      dropdown.click();
+      dropdown.findElement(By.xpath("//option[. = '50']")).click();
+      List<WebElement> table50Rows = tableBody.findElements(By.tagName("tr"));
+      // assert that the whole table is visible when there are less rows than
+      // the options clicked
+      generateResultsList(table50Rows, table50Rows.size());
+
+      dropdown.click();
+      dropdown.findElement(By.xpath("//option[. = '100']")).click();
+      List<WebElement> table100Rows = tableBody.findElements(By.tagName("tr"));
+      generateResultsList(table100Rows, table100Rows.size());
+    }
     // Creates a new list of elements that can be used in an assert()
     // by looping through an existing list.
     // Also asserts the elements exist and are not null.
@@ -270,6 +297,8 @@ public class TableTests {
           System.out.println("Table Data: " + tr.getAttribute("innerText"));
         }
       }
+      System.out.println("Rows: " + tableResults.size());
+      System.out.println("\n");
       assert tableResults.size() >= comparator;
       assertNotNull(tableResults.get(0));
     }
