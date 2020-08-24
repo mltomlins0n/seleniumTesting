@@ -10,6 +10,7 @@ import static org.junit.Assert.assertNotNull;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.By;
@@ -24,8 +25,11 @@ public class TableTests {
       System.setProperty(
                   "webdriver.chrome.driver",
                   "src/test/java/resources/chromedriver.exe");
-      driver = new ChromeDriver();
+      ChromeOptions options = new ChromeOptions();
+      options.addArguments("--ignore-certificate-errors");
+      driver = new ChromeDriver(options);
       driver.manage().window().maximize();
+
       js = (JavascriptExecutor) driver;
       driver.get("https://www.seleniumeasy.com/test/table-search-filter-demo.html");
     }
@@ -212,7 +216,7 @@ public class TableTests {
     // Table Filter Tests
     @Test
     public void tableFilter() {
-      driver.get("https://www.seleniumeasy.com/test/table-records-filter-demo.html#");
+      driver.get("https://www.seleniumeasy.com/test/table-records-filter-demo.html");
 
       WebElement table = driver.findElement(By.xpath
       ("/html/body/div[2]/div/div[2]/section/div/div/div[2]/div[2]/table"));
@@ -231,6 +235,23 @@ public class TableTests {
       // Wait until all table rows are fully visible
       wait.until(ExpectedConditions.visibilityOfAllElements(tableRows));
       generateResultsList(tableRows, 1);
+    }
+    // Table sort and search tests
+    @Test
+    public void tablePages() {
+      driver.get("https://www.seleniumeasy.com/test/table-sort-search-demo.html");  
+      driver.findElement(By.id("example_next")).click();
+      driver.findElement(By.id("example_next")).click();
+      driver.findElement(By.id("example_next")).click();
+      driver.findElement(By.id("example_previous")).click();
+      driver.findElement(By.id("example_previous")).click();
+      driver.findElement(By.id("example_previous")).click();
+      driver.findElement(By.linkText("2")).click();
+      driver.findElement(By.linkText("3")).click();
+      driver.findElement(By.linkText("4")).click();
+      driver.findElement(By.linkText("3")).click();
+      driver.findElement(By.linkText("2")).click();
+      driver.findElement(By.linkText("1")).click();
     }
 
     // Creates a new list of elements that can be used in an assert()
