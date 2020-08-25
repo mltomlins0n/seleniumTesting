@@ -401,6 +401,7 @@ public class TableTests {
       WebElement noResult = nonsenseFilterResults.get(0);
       assertTrue("Are you sure there aren't results?", noResult.getText().equals("No matching records found"));
   }
+  // TODO - JQuery UI Progress bar, test all buttons, wait until download says "complete" and assert
     // Creates a new list of elements that can be used in an assert()
     // by looping through an existing list.
     // Also asserts the elements exist and are not null.
