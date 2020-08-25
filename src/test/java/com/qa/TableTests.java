@@ -285,20 +285,81 @@ public class TableTests {
     }
     @Test
     public void tableSortTest() {
-      // TODO - assert that the top of the sorted table has x value each time the table is sorted
       driver.get("https://www.seleniumeasy.com/test/table-sort-search-demo.html");
-      driver.findElement(By.cssSelector(".sorting_asc")).click();
-      driver.findElement(By.cssSelector(".sorting_desc")).click();
-      driver.findElement(By.cssSelector(".sorting:nth-child(2)")).click();
-      driver.findElement(By.cssSelector(".sorting_asc")).click();
-      driver.findElement(By.cssSelector(".sorting:nth-child(3)")).click();
-      driver.findElement(By.cssSelector(".sorting_asc")).click();
-      driver.findElement(By.cssSelector(".sorting:nth-child(4)")).click();
-      driver.findElement(By.cssSelector(".sorting_asc")).click();
-      driver.findElement(By.cssSelector(".sorting:nth-child(5)")).click();
-      driver.findElement(By.cssSelector(".sorting_asc")).click();
-      driver.findElement(By.cssSelector(".sorting:nth-child(6)")).click();
-      driver.findElement(By.cssSelector(".sorting_asc")).click();
+      WebElement table = driver.findElement(By.id("example"));
+      WebElement tableBody = table.findElement(By.tagName("tbody"));
+      {
+        // Get the row again to prevent "stale element" errors
+          WebElement firstRow = tableBody.findElement(By.tagName("tr"));
+          List<WebElement> firstRowElements = firstRow.findElements(By.tagName("td"));
+          assertTrue("Text doesn't match", firstRowElements.get(0).getText().equalsIgnoreCase("A. Cox"));
+      }
+      {
+          driver.findElement(By.cssSelector(".sorting_asc")).click();
+          WebElement firstRow = tableBody.findElement(By.tagName("tr"));
+          List<WebElement> firstRowElements = firstRow.findElements(By.tagName("td"));
+          assertTrue("Text doesn't match", firstRowElements.get(0).getText().equalsIgnoreCase("Y. Berry"));
+      }
+      {
+        driver.findElement(By.xpath("//*[@id=\"example\"]/thead/tr/th[2]")).click();
+        WebElement firstRow = tableBody.findElement(By.tagName("tr"));
+        List<WebElement> firstRowElements = firstRow.findElements(By.tagName("td"));
+        assertTrue("Text doesn't match", firstRowElements.get(1).getText().equalsIgnoreCase("Accountant"));  
+      }
+      {
+        driver.findElement(By.xpath("//*[@id=\"example\"]/thead/tr/th[2]")).click();
+        WebElement firstRow = tableBody.findElement(By.tagName("tr"));
+        List<WebElement> firstRowElements = firstRow.findElements(By.tagName("td"));
+        assertTrue("Text doesn't match", firstRowElements.get(1).getText().equalsIgnoreCase("Systems Administrator"));
+      }
+      {
+        driver.findElement(By.xpath("//*[@id=\"example\"]/thead/tr/th[3]")).click();
+        WebElement firstRow = tableBody.findElement(By.tagName("tr"));
+        List<WebElement> firstRowElements = firstRow.findElements(By.tagName("td"));
+        assertTrue("Text doesn't match", firstRowElements.get(2).getText().equalsIgnoreCase("Edinburgh"));
+      }
+      {
+        driver.findElement(By.xpath("//*[@id=\"example\"]/thead/tr/th[3]")).click();
+        WebElement firstRow = tableBody.findElement(By.tagName("tr"));
+        List<WebElement> firstRowElements = firstRow.findElements(By.tagName("td"));
+        assertTrue("Text doesn't match", firstRowElements.get(2).getText().equalsIgnoreCase("Tokyo"));
+      }
+      {
+        driver.findElement(By.xpath("//*[@id=\"example\"]/thead/tr/th[4]")).click();
+        WebElement firstRow = tableBody.findElement(By.tagName("tr"));
+        List<WebElement> firstRowElements = firstRow.findElements(By.tagName("td"));
+        assertTrue("Text doesn't match", firstRowElements.get(3).getText().equalsIgnoreCase("19"));
+      }
+      {
+        driver.findElement(By.xpath("//*[@id=\"example\"]/thead/tr/th[4]")).click();
+        WebElement firstRow = tableBody.findElement(By.tagName("tr"));
+        List<WebElement> firstRowElements = firstRow.findElements(By.tagName("td"));
+        assertTrue("Text doesn't match", firstRowElements.get(3).getText().equalsIgnoreCase("66"));
+      }
+      {
+        driver.findElement(By.xpath("//*[@id=\"example\"]/thead/tr/th[5]")).click();
+        WebElement firstRow = tableBody.findElement(By.tagName("tr"));
+        List<WebElement> firstRowElements = firstRow.findElements(By.tagName("td"));
+        assertTrue("Text doesn't match", firstRowElements.get(4).getText().equalsIgnoreCase("Thu 16th Oct 08"));
+      }
+      {
+        driver.findElement(By.xpath("//*[@id=\"example\"]/thead/tr/th[5]")).click();
+        WebElement firstRow = tableBody.findElement(By.tagName("tr"));
+        List<WebElement> firstRowElements = firstRow.findElements(By.tagName("td"));
+        assertTrue("Text doesn't match", firstRowElements.get(4).getText().equalsIgnoreCase("Sun 3rd Mar 13"));
+      }
+      {
+        driver.findElement(By.xpath("//*[@id=\"example\"]/thead/tr/th[6]")).click();
+        WebElement firstRow = tableBody.findElement(By.tagName("tr"));
+        List<WebElement> firstRowElements = firstRow.findElements(By.tagName("td"));
+        assertTrue("Text doesn't match", firstRowElements.get(5).getText().equalsIgnoreCase("$85,600/y"));
+      }
+      {
+        driver.findElement(By.xpath("//*[@id=\"example\"]/thead/tr/th[6]")).click();
+        WebElement firstRow = tableBody.findElement(By.tagName("tr"));
+        List<WebElement> firstRowElements = firstRow.findElements(By.tagName("td"));
+        assertTrue("Text doesn't match", firstRowElements.get(5).getText().equalsIgnoreCase("$1,200,000/y"));
+      }
     }
     @Test
     public void tableSearchTest() {
