@@ -401,7 +401,21 @@ public class TableTests {
       WebElement noResult = nonsenseFilterResults.get(0);
       assertTrue("Are you sure there aren't results?", noResult.getText().equals("No matching records found"));
   }
-  // TODO - JQuery UI Progress bar, test all buttons, wait until download says "complete" and assert
+  @Test
+  public void jQueryUIProgessBarTest() {
+    driver.get("https://www.seleniumeasy.com/test/jquery-download-progress-bar-demo.html");
+    
+    WebElement progressLabel = driver.findElement(By.className("progress-label"));
+
+    driver.findElement(By.id("downloadButton")).click();
+    // wait for progress label to say "completed!"
+    WebDriverWait wait = new WebDriverWait(driver, 20);
+    wait.until(ExpectedConditions.textToBePresentInElement(progressLabel, "Complete!"));
+    driver.findElement(By.cssSelector(".ui-dialog-buttonset > button")).click();
+    // Cancel the download
+    driver.findElement(By.id("downloadButton")).click();
+    driver.findElement(By.cssSelector(".ui-dialog-buttonset > button")).click();
+  }
     // Creates a new list of elements that can be used in an assert()
     // by looping through an existing list.
     // Also asserts the elements exist and are not null.
