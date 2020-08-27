@@ -416,6 +416,32 @@ public class TableTests {
     driver.findElement(By.id("downloadButton")).click();
     driver.findElement(By.cssSelector(".ui-dialog-buttonset > button")).click();
   }
+  @Test
+  public void bootstrapProgressBar() {
+    driver.get("https://www.seleniumeasy.com/test/bootstrap-download-progress-demo.html");
+    // If the test breaks, someone probably corrected the typo in "cricle"
+    WebElement downloadButton = driver.findElement(By.id("cricle-btn"));
+    WebElement downloadIcon = driver.findElement(By.className("percenttext"));
+    {
+      String downloadText = downloadIcon.getText();
+      downloadButton.click();
+      System.out.println("Download: " + downloadText);
+    }
+
+    WebDriverWait wait = new WebDriverWait(driver, 30);
+    
+    wait.until(ExpectedConditions.textToBePresentInElement(downloadIcon, "50%"));
+    {
+      String downloadText = downloadIcon.getText();
+      System.out.println("Download: " + downloadText);
+    }
+    
+    wait.until(ExpectedConditions.textToBePresentInElement(downloadIcon, "100%"));
+    {
+      String downloadText = downloadIcon.getText();
+      System.out.println("Download: " + downloadText);
+    }
+  }
     // Creates a new list of elements that can be used in an assert()
     // by looping through an existing list.
     // Also asserts the elements exist and are not null.
