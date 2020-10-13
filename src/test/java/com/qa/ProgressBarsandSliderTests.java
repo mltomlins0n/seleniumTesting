@@ -4,11 +4,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.After;
 
+import java.util.List;
+import java.util.Random;
+import java.util.ArrayList;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -75,5 +79,40 @@ public class ProgressBarsandSliderTests {
           String downloadText = downloadIcon.getText();
           System.out.println("Download: " + downloadText);
         }
+      }
+      @Test
+      public void dragDropSliders() {
+        driver.get("https://www.seleniumeasy.com/test/drag-drop-range-sliders-demo.html");
+        WebElement slider1 = driver.findElement(By.id("slider1"));
+        WebElement slider2 = driver.findElement(By.id("slider2"));
+        WebElement slider3 = driver.findElement(By.id("slider3"));
+        WebElement slider4 = driver.findElement(By.id("slider4"));
+        WebElement slider5 = driver.findElement(By.id("slider5"));
+        WebElement slider6 = driver.findElement(By.id("slider6"));
+        
+        List<WebElement> sliderList = new ArrayList<WebElement>();
+
+        sliderList.add(slider1);
+        sliderList.add(slider2);
+        sliderList.add(slider3);
+        sliderList.add(slider4);
+        sliderList.add(slider5);
+        sliderList.add(slider6);
+
+        Random rand = new Random();
+        Actions builder = new Actions(driver);
+
+        for (WebElement slider : sliderList) {
+          WebElement sliderRange = slider.findElement(By.className("range"));
+          WebElement sliderInput = sliderRange.findElement(By.tagName("input"));
+          WebElement sliderVal = slider.findElement(By.tagName("output"));
+          // This random int is the offset from the center of the element to be clicked
+          // The range is -200 to 200 pixels
+          int randX = rand.nextInt(200 + 10) - 200;
+          builder.moveToElement(sliderInput, randX, 0).click().build().perform();
+          System.out.println("Slider value: " + sliderVal.getText());
+        }
+
+        //TODO - Add some assert statements to make sure the slider value is valid
       }
 }
