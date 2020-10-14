@@ -81,6 +81,7 @@ public class ProgressBarsandSliderTests {
           System.out.println("Download: " + downloadText);
         }
       }
+      // Slider Tests
       @Test
       public void dragDropSliders() {
         driver.get("https://www.seleniumeasy.com/test/drag-drop-range-sliders-demo.html");
