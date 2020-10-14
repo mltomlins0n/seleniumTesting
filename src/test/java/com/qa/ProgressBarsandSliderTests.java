@@ -3,7 +3,6 @@ package com.qa;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.After;
-
 import java.util.List;
 import java.util.Random;
 import java.util.ArrayList;
