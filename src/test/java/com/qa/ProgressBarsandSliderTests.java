@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import static org.junit.Assert.assertNotNull;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -111,8 +112,7 @@ public class ProgressBarsandSliderTests {
           int randX = rand.nextInt(200 + 10) - 200;
           builder.moveToElement(sliderInput, randX, 0).click().build().perform();
           System.out.println("Slider value: " + sliderVal.getText());
+          assertNotNull("The slider value has no value.", sliderVal.getText());
         }
-
-        //TODO - Add some assert statements to make sure the slider value is valid
       }
 }
