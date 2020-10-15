@@ -17,6 +17,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class AlertsandModals {
     private WebDriver driver;
+    private WebDriverWait wait;
     JavascriptExecutor js;
 
     @Before
@@ -25,6 +26,7 @@ public class AlertsandModals {
         "src/test/java/resources/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
+        wait = new WebDriverWait(driver, 10);
 
         js = (JavascriptExecutor) driver;
     }
@@ -35,9 +37,8 @@ public class AlertsandModals {
 
     // Alert Tests
     @Test
-    public void bootstrapAlerts() throws InterruptedException {
+    public void bootstrapAlerts() {
         driver.get("https://www.seleniumeasy.com/test/bootstrap-alert-messages-demo.html");
-        WebDriverWait wait = new WebDriverWait(driver, 10);
 
         WebElement buttonContainer = driver.findElement(By.className("col-md-4"));
         List <WebElement> buttons = buttonContainer.findElements(By.tagName("button"));
@@ -60,4 +61,5 @@ public class AlertsandModals {
             assertFalse("The alerts should be gone", alert.isDisplayed());
         }
     }
+    
 }
