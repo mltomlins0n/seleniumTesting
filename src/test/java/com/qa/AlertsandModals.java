@@ -63,6 +63,7 @@ public class AlertsandModals {
     @Test
     public void bootstrapModals() {
         driver.get("https://www.seleniumeasy.com/test/bootstrap-modal-demo.html");
+        
         // Modal 1
         WebElement launchButton = driver.findElement(By.cssSelector(
             "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div:nth-child(2) > div > div > div.panel-body > a"
@@ -104,8 +105,9 @@ public class AlertsandModals {
             switch(i) {
                 case 0:
                 // Click the top right close icon
-                //  driver.findElement(By.className("close")).click();
-                driver.findElement(By.xpath("//*[@id=\"myModal\"]/div/div/div[1]/button")).click();
+                driver.findElement(By.cssSelector(
+                    "#myModal > div > div > div.modal-header > button"
+                )).click();
                 break;
                 case 1:
                 // Click the close button
@@ -122,5 +124,45 @@ public class AlertsandModals {
                 break;
             }
         }
+        /* // TODO - Do something with this
+        WebElement modal3 = driver.findElement(By.cssSelector("#myModal2 > div > div > div.modal-body"));
+        
+        WebElement launchButton3 = driver.findElement(By.cssSelector(
+            "#myModal > div > div > div.modal-body > a"
+        ));
+        
+        launchButton2.click();
+        wait.until(ExpectedConditions.visibilityOf(modal2));
+        launchButton3.click();
+        wait.until(ExpectedConditions.visibilityOf(modal3));
+                
+        // close icon
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#myModal2 > div > div > div.modal-header > button")));
+        driver.findElement(By.cssSelector(
+            "#myModal2 > div > div > div.modal-header > button"
+        )).click();
+
+        launchButton2.click();
+        wait.until(ExpectedConditions.visibilityOf(modal2));
+        launchButton3.click();
+        wait.until(ExpectedConditions.visibilityOf(modal3));
+
+        // close button
+        WebElement closeButton = driver.findElement(By.cssSelector(
+            "#myModal2 > div > div > div.modal-footer > a:nth-child(1)"
+        ));
+        js.executeScript("arguments[0].click()", closeButton);
+
+        launchButton2.click();
+        wait.until(ExpectedConditions.visibilityOf(modal2));
+        launchButton3.click();
+        wait.until(ExpectedConditions.visibilityOf(modal3));
+
+        // Save changes
+        WebElement saveButton = driver.findElement(By.cssSelector(
+            "#myModal2 > div > div > div.modal-footer > a.btn.btn-primary"
+        ));
+        js.executeScript("arguments[0].click()", saveButton);
+        */
     }
 }
