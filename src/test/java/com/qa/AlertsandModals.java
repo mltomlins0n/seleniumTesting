@@ -13,6 +13,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class AlertsandModals {
     private WebDriver driver;
@@ -21,12 +22,11 @@ public class AlertsandModals {
 
     @Before
     public void setUp() {
-        System.setProperty("webdriver.chrome.driver", 
-        "src/test/java/resources/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver",
+                           "src/test/java/resources/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        wait = new WebDriverWait(driver, 10);
-
+        wait = new WebDriverWait(driver, 10);                   
         js = (JavascriptExecutor) driver;
     }
     @After
@@ -60,6 +60,7 @@ public class AlertsandModals {
             assertFalse("The alerts should be gone", alert.isDisplayed());
         }
     }
+    // Modal Tests
     @Test
     public void bootstrapModals() {
         driver.get("https://www.seleniumeasy.com/test/bootstrap-modal-demo.html");
@@ -176,5 +177,18 @@ public class AlertsandModals {
                 break;
             }    
         }
+    }
+    // Popup Modal Tests
+    @Test
+    public void windowPopupModals() throws InterruptedException {
+        driver.get("https://www.seleniumeasy.com/test/window-popup-modal-demo.html");
+
+        driver.findElement(By.cssSelector(
+            "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div:nth-child(2) > div > div.panel-body > div:nth-child(1) > a"
+        )).click();
+        // TODO - assert that the link went to the correct url, automate the rest of the page
+        //wait until pageload
+        String twitterUrl = driver.getCurrentUrl();
+        assertThat("Do the URLs match?", driver.getCurrentUrl().equals(twitterUrl));
     }
 }
