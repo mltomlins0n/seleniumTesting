@@ -180,33 +180,48 @@ public class AlertsandModals {
     }
     // Popup Modal Tests
     @Test
-    public void windowPopupModals() throws InterruptedException {
+    public void windowPopupModals() {
         driver.get("https://www.seleniumeasy.com/test/window-popup-modal-demo.html");
 
         String parentWindow = driver.getWindowHandle();
+        // Twitter button
         driver.findElement(By.cssSelector(
             "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div:nth-child(2) > div > div.panel-body > div:nth-child(1) > a"
         )).click();
-        verifyChildWindow();
-
-        // switch back to parent window
-        driver.switchTo().window(parentWindow);
-
+        verifyChildWindow(parentWindow, 2);
+        // Facebook button
         driver.findElement(By.cssSelector(
             "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div:nth-child(2) > div > div.panel-body > div:nth-child(2) > a"
         )).click();
-        verifyChildWindow();
-        
+        verifyChildWindow(parentWindow, 2);
+        // Twitter & facebook button
+        driver.findElement(By.cssSelector(
+        "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div:nth-child(3) > div > div.panel-body > div.two-windows > a"
+        )).click();
+        verifyChildWindow(parentWindow, 3);
+        // Twitter, Facebook, and Google+ (lmao) button
+        driver.findElement(By.cssSelector("#followall")).click();
+        verifyChildWindow(parentWindow, 4);
     }
-    public void verifyChildWindow() {
-    // wait until pageload to get the correct url
-    wait.until(ExpectedConditions.numberOfWindowsToBe(2));
-    for (String childWindow : driver.getWindowHandles()) {
-        driver.switchTo().window(childWindow);
-        String childUrl = driver.getCurrentUrl();
-        System.out.println(childUrl);
-        assertThat("Do the URLs match?", driver.getCurrentUrl().equals(childUrl));
+    // Switches to the child window, verifies the url
+    // then closes and switches back to the parent window
+    // Params: String parentWindow
+    // The window that opened the child window
+    // int numWindows
+    // The number of total windows open (parent + child)
+    public void verifyChildWindow(String parentWindow, int numWindows) {
+        // wait until pageload to get the correct url
+        wait.until(ExpectedConditions.numberOfWindowsToBe(numWindows));
+        System.out.println("Number of windows open: " + numWindows);
+        for (String childWindow : driver.getWindowHandles()) {
+            if (!(parentWindow.equals(childWindow))) {
+                driver.switchTo().window(childWindow);
+                String childUrl = driver.getCurrentUrl();
+                System.out.println(childUrl);
+                assertThat("Do the URLs match?", driver.getCurrentUrl().equals(childUrl));
+                driver.close(); // close child window
+            }
+        }
+        driver.switchTo().window(parentWindow);
     }
-    driver.close(); // close child window
-}
 }
