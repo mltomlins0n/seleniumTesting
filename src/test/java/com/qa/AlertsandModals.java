@@ -183,12 +183,30 @@ public class AlertsandModals {
     public void windowPopupModals() throws InterruptedException {
         driver.get("https://www.seleniumeasy.com/test/window-popup-modal-demo.html");
 
+        String parentWindow = driver.getWindowHandle();
         driver.findElement(By.cssSelector(
             "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div:nth-child(2) > div > div.panel-body > div:nth-child(1) > a"
         )).click();
-        // TODO - assert that the link went to the correct url, automate the rest of the page
-        //wait until pageload
-        String twitterUrl = driver.getCurrentUrl();
-        assertThat("Do the URLs match?", driver.getCurrentUrl().equals(twitterUrl));
+        verifyChildWindow();
+
+        // switch back to parent window
+        driver.switchTo().window(parentWindow);
+
+        driver.findElement(By.cssSelector(
+            "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div:nth-child(2) > div > div.panel-body > div:nth-child(2) > a"
+        )).click();
+        verifyChildWindow();
+        
     }
+    public void verifyChildWindow() {
+    // wait until pageload to get the correct url
+    wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+    for (String childWindow : driver.getWindowHandles()) {
+        driver.switchTo().window(childWindow);
+        String childUrl = driver.getCurrentUrl();
+        System.out.println(childUrl);
+        assertThat("Do the URLs match?", driver.getCurrentUrl().equals(childUrl));
+    }
+    driver.close(); // close child window
+}
 }
