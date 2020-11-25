@@ -22,13 +22,14 @@ public class AlertsandModals {
 
     @Before
     public void setUp() {
-        System.setProperty("webdriver.chrome.driver",
+        System.setProperty("webdriver.chrome.driver", 
                            "src/test/java/resources/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        wait = new WebDriverWait(driver, 10);                   
+        wait = new WebDriverWait(driver, 10);
         js = (JavascriptExecutor) driver;
     }
+
     @After
     public void tearDown() {
         driver.quit();
@@ -40,11 +41,11 @@ public class AlertsandModals {
         driver.get("https://www.seleniumeasy.com/test/bootstrap-alert-messages-demo.html");
 
         WebElement buttonContainer = driver.findElement(By.className("col-md-4"));
-        List <WebElement> buttons = buttonContainer.findElements(By.tagName("button"));
+        List<WebElement> buttons = buttonContainer.findElements(By.tagName("button"));
 
         WebElement alertContainer = driver.findElement(By.cssSelector(
-        "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div > div.col-md-6"));
-        List <WebElement> alerts = alertContainer.findElements(By.tagName("div"));
+                "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div > div.col-md-6"));
+        List<WebElement> alerts = alertContainer.findElements(By.tagName("div"));
 
         for (WebElement button : buttons) {
             button.click();
@@ -53,131 +54,114 @@ public class AlertsandModals {
         for (WebElement alert : alerts) {
             // Select only the alerts that don't auto close
             if (alert.getAttribute("hidden") != null) {
-                WebElement  closeButton = alert.findElement(By.tagName("button"));
+                WebElement closeButton = alert.findElement(By.tagName("button"));
                 wait.until(ExpectedConditions.elementToBeClickable(closeButton)).click();
             }
             wait.until(ExpectedConditions.invisibilityOf(alert));
             assertFalse("The alerts should be gone", alert.isDisplayed());
         }
     }
+
     // Modal Tests
     @Test
     public void bootstrapModals() {
         driver.get("https://www.seleniumeasy.com/test/bootstrap-modal-demo.html");
-        
+
         // Modal 1
         WebElement launchButton = driver.findElement(By.cssSelector(
-            "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div:nth-child(2) > div > div > div.panel-body > a"
-        ));
-        WebElement modal = driver.findElement(By.cssSelector(
-            "#myModal0 > div > div > div.modal-footer"
-        ));
+                "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div:nth-child(2) > div > div > div.panel-body > a"));
+        WebElement modal = driver.findElement(By.cssSelector("#myModal0 > div > div > div.modal-footer"));
         for (int i = 0; i < 3; i++) {
             launchButton.click();
             wait.until(ExpectedConditions.visibilityOf(modal));
-            switch(i) {
+            switch (i) {
                 case 0:
-                // Click the top right close icon
-                driver.findElement(By.className("close")).click();
-                break;
+                    // Click the top right close icon
+                    driver.findElement(By.className("close")).click();
+                    break;
                 case 1:
-                // Click the close button
-                WebElement closeButton = driver.findElement(By.className("btn"));
-                // Using js executor to get around "Element Click Intercepted" exception
-                js.executeScript("arguments[0].click()", closeButton);
-                break;
+                    // Click the close button
+                    WebElement closeButton = driver.findElement(By.className("btn"));
+                    // Using js executor to get around "Element Click Intercepted" exception
+                    js.executeScript("arguments[0].click()", closeButton);
+                    break;
                 case 2:
-                // Click the "Save Changes" button
-                WebElement saveButton = driver.findElement(By.xpath("//*[@id=\"myModal0\"]/div/div/div[4]/a[2]"));
-                js.executeScript("arguments[0].click()", saveButton);
-                break;
+                    // Click the "Save Changes" button
+                    WebElement saveButton = driver.findElement(By.xpath("//*[@id=\"myModal0\"]/div/div/div[4]/a[2]"));
+                    js.executeScript("arguments[0].click()", saveButton);
+                    break;
             }
         }
         WebElement launchButton2 = driver.findElement(By.cssSelector(
-            "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div:nth-child(3) > div > div > div.panel-body > a"
-            ));
-        WebElement modal2 = driver.findElement(By.cssSelector(
-            "#myModal > div > div > div.modal-footer"
-            ));
+                "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div:nth-child(3) > div > div > div.panel-body > a"));
+        WebElement modal2 = driver.findElement(By.cssSelector("#myModal > div > div > div.modal-footer"));
         // Modal 2
         for (int i = 0; i < 3; i++) {
             launchButton2.click();
             wait.until(ExpectedConditions.visibilityOf(modal2));
-            switch(i) {
+            switch (i) {
                 case 0:
-                // Click the top right close icon
-                driver.findElement(By.cssSelector(
-                    "#myModal > div > div > div.modal-header > button"
-                )).click();
-                break;
+                    // Click the top right close icon
+                    driver.findElement(By.cssSelector("#myModal > div > div > div.modal-header > button")).click();
+                    break;
                 case 1:
-                // Click the close button
-                WebElement closeButton2 = driver.findElement(By.cssSelector(
-                    "#myModal > div > div > div.modal-footer > a:nth-child(1)"
-                ));
-                // Using js executor to get around "Element Click Intercepted" exception
-                js.executeScript("arguments[0].click()", closeButton2);
-                break;
+                    // Click the close button
+                    WebElement closeButton2 = driver
+                            .findElement(By.cssSelector("#myModal > div > div > div.modal-footer > a:nth-child(1)"));
+                    // Using js executor to get around "Element Click Intercepted" exception
+                    js.executeScript("arguments[0].click()", closeButton2);
+                    break;
                 case 2:
-                // Click the "Save Changes" button
-                WebElement saveButton2 = driver.findElement(By.xpath("//*[@id=\"myModal\"]/div/div/div[4]/a[2]"));
-                js.executeScript("arguments[0].click()", saveButton2);
-                break;
+                    // Click the "Save Changes" button
+                    WebElement saveButton2 = driver.findElement(By.xpath("//*[@id=\"myModal\"]/div/div/div[4]/a[2]"));
+                    js.executeScript("arguments[0].click()", saveButton2);
+                    break;
             }
         }
     }
+
     @Test
     public void innerBootstrapModal() {
-        // This code should be in the bootstrapModals() function, but is here to get around
+        // This code should be in the bootstrapModals() function, but is here to get
+        // around
         // the stale element exception caused by it being in there
         driver.get("https://www.seleniumeasy.com/test/bootstrap-modal-demo.html");
 
         WebElement launchButton2 = driver.findElement(By.cssSelector(
-            "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div:nth-child(3) > div > div > div.panel-body > a"
-            ));
-        WebElement modal2 = driver.findElement(By.cssSelector(
-            "#myModal > div > div > div.modal-footer"
-            ));
-        WebElement modal3 = driver.findElement(By.cssSelector(
-            "#myModal2 > div > div > div.modal-body"
-        ));
-        WebElement launchButton3 = driver.findElement(By.cssSelector(
-            "#myModal > div > div > div.modal-body > a"
-        ));
-        
+                "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div:nth-child(3) > div > div > div.panel-body > a"));
+        WebElement modal2 = driver.findElement(By.cssSelector("#myModal > div > div > div.modal-footer"));
+        WebElement modal3 = driver.findElement(By.cssSelector("#myModal2 > div > div > div.modal-body"));
+        WebElement launchButton3 = driver.findElement(By.cssSelector("#myModal > div > div > div.modal-body > a"));
+
         launchButton2.click();
         wait.until(ExpectedConditions.visibilityOf(modal2));
         // Modal 3
         for (int i = 0; i < 3; i++) {
             launchButton3.click();
             wait.until(ExpectedConditions.visibilityOf(modal3));
-            switch(i) {
+            switch (i) {
                 case 0:
-                // close icon
-                wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(
-                    "#myModal2 > div > div > div.modal-header > button"
-                )));
-                driver.findElement(By.cssSelector(
-                    "#myModal2 > div > div > div.modal-header > button"
-                )).click();
-                break;
+                    // close icon
+                    wait.until(ExpectedConditions
+                            .elementToBeClickable(By.cssSelector("#myModal2 > div > div > div.modal-header > button")));
+                    driver.findElement(By.cssSelector("#myModal2 > div > div > div.modal-header > button")).click();
+                    break;
                 case 1:
-                // close button
-                WebElement closeButton = driver.findElement(By.cssSelector(
-                    "#myModal2 > div > div > div.modal-footer > a:nth-child(1)"
-                ));
-                js.executeScript("arguments[0].click()", closeButton);
-                break;
+                    // close button
+                    WebElement closeButton = driver
+                            .findElement(By.cssSelector("#myModal2 > div > div > div.modal-footer > a:nth-child(1)"));
+                    js.executeScript("arguments[0].click()", closeButton);
+                    break;
                 case 2:
-                // Save changes
-                WebElement saveButton = driver.findElement(By.cssSelector(
-                    "#myModal2 > div > div > div.modal-footer > a.btn.btn-primary"
-                ));
-                js.executeScript("arguments[0].click()", saveButton);
-                break;
-            }    
+                    // Save changes
+                    WebElement saveButton = driver.findElement(
+                            By.cssSelector("#myModal2 > div > div > div.modal-footer > a.btn.btn-primary"));
+                    js.executeScript("arguments[0].click()", saveButton);
+                    break;
+            }
         }
     }
+
     // Popup Modal Tests
     @Test
     public void windowPopupModals() {
@@ -186,22 +170,36 @@ public class AlertsandModals {
         String parentWindow = driver.getWindowHandle();
         // Twitter button
         driver.findElement(By.cssSelector(
-            "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div:nth-child(2) > div > div.panel-body > div:nth-child(1) > a"
-        )).click();
+                "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div:nth-child(2) > div > div.panel-body > div:nth-child(1) > a"))
+                .click();
         verifyChildWindow(parentWindow, 2);
         // Facebook button
         driver.findElement(By.cssSelector(
-            "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div:nth-child(2) > div > div.panel-body > div:nth-child(2) > a"
-        )).click();
+                "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div:nth-child(2) > div > div.panel-body > div:nth-child(2) > a"))
+                .click();
         verifyChildWindow(parentWindow, 2);
         // Twitter & facebook button
         driver.findElement(By.cssSelector(
-        "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div:nth-child(3) > div > div.panel-body > div.two-windows > a"
-        )).click();
+                "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div:nth-child(3) > div > div.panel-body > div.two-windows > a"))
+                .click();
         verifyChildWindow(parentWindow, 3);
         // Twitter, Facebook, and Google+ (lmao) button
         driver.findElement(By.cssSelector("#followall")).click();
         verifyChildWindow(parentWindow, 4);
+    }
+
+    // Progress Bar Modals
+    @Test
+    public void progressModals() {
+        driver.get("https://www.seleniumeasy.com/test/bootstrap-progress-bar-dialog-demo.html");
+
+        WebElement buttonContainer = driver
+                .findElement(By.cssSelector("body > div.container-fluid.text-center > div > div.col-md-6.text-left"));
+        List<WebElement> buttons = buttonContainer.findElements(By.tagName("button"));
+
+        // TODO - find a way to wait until the next button can be clicked without triggering an exception
+
+        
     }
     // Switches to the child window, verifies the url
     // then closes and switches back to the parent window
