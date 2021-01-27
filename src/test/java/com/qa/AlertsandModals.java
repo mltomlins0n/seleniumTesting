@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.After;
 
 import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -197,9 +198,16 @@ public class AlertsandModals {
                 .findElement(By.cssSelector("body > div.container-fluid.text-center > div > div.col-md-6.text-left"));
         List<WebElement> buttons = buttonContainer.findElements(By.tagName("button"));
 
-        // TODO - find a way to wait until the next button can be clicked without triggering an exception
-
-        
+        for (WebElement button : buttons) {
+            try {
+                button.click();
+                wait.until(ExpectedConditions.alertIsPresent());
+                driver.switchTo().alert();
+            }
+            catch (Exception e) {
+                
+            }
+        }   
     }
     // Switches to the child window, verifies the url
     // then closes and switches back to the parent window
