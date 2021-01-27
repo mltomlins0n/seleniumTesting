@@ -236,26 +236,16 @@ public class AlertsandModals {
         assert(confirmText.getText().equalsIgnoreCase("You pressed Cancel!"));
 
         // JavaScript alert box
-        String promptText = driver.findElement(By.id("prompt-demo")).getText();
         WebElement promptButton = driver.findElement(By.cssSelector(
             "#easycont > div > div.col-md-6.text-left > div:nth-child(6) > div.panel-body > button"));
         promptButton.click();
         wait.until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert().sendKeys("Arthur Dent");
-        String inputText = driver.switchTo().alert().getText();
         driver.switchTo().alert().accept();
-        //assert(promptText.getText().equalsIgnoreCase(inputText));
-        
-        // wait for debugging
-        try {
-            Thread.sleep(2000);
-        }
-        catch (Exception e) {
-
-        }
-        System.out.println("Prompt: " + promptText + "Input: " + inputText);
-
-        
+        String promptText = driver.findElement(By.id("prompt-demo")).getText();
+        // Text to match against is hard coded as there is no way to store
+        // the input text from an alert apparently
+        assert(promptText.equalsIgnoreCase("You have entered 'Arthur Dent' !"));
     }
 
     // Switches to the child window, verifies the url
