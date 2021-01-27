@@ -209,6 +209,55 @@ public class AlertsandModals {
             }
         }   
     }
+
+    // JavaScript Alerts
+    @Test
+    public void javascriptAlerts() {
+        driver.get("https://www.seleniumeasy.com/test/javascript-alert-box-demo.html");
+
+        // JavaScript alert box
+        WebElement alertButton = driver.findElement(By.cssSelector(
+            "#easycont > div > div.col-md-6.text-left > div:nth-child(4) > div.panel-body > button"));
+        alertButton.click();
+        wait.until(ExpectedConditions.alertIsPresent());
+        driver.switchTo().alert().accept();
+
+        // JavaScript confirm box
+        WebElement confirmText = driver.findElement(By.id("confirm-demo"));
+        WebElement confirmButton = driver.findElement(By.cssSelector(
+            "#easycont > div > div.col-md-6.text-left > div:nth-child(5) > div.panel-body > button"));
+        confirmButton.click();
+        wait.until(ExpectedConditions.alertIsPresent());
+        driver.switchTo().alert().accept();
+        assert(confirmText.getText().equalsIgnoreCase("You pressed OK!"));
+        confirmButton.click();
+        wait.until(ExpectedConditions.alertIsPresent());
+        driver.switchTo().alert().dismiss();
+        assert(confirmText.getText().equalsIgnoreCase("You pressed Cancel!"));
+
+        // JavaScript alert box
+        String promptText = driver.findElement(By.id("prompt-demo")).getText();
+        WebElement promptButton = driver.findElement(By.cssSelector(
+            "#easycont > div > div.col-md-6.text-left > div:nth-child(6) > div.panel-body > button"));
+        promptButton.click();
+        wait.until(ExpectedConditions.alertIsPresent());
+        driver.switchTo().alert().sendKeys("Arthur Dent");
+        String inputText = driver.switchTo().alert().getText();
+        driver.switchTo().alert().accept();
+        //assert(promptText.getText().equalsIgnoreCase(inputText));
+        
+        // wait for debugging
+        try {
+            Thread.sleep(2000);
+        }
+        catch (Exception e) {
+
+        }
+        System.out.println("Prompt: " + promptText + "Input: " + inputText);
+
+        
+    }
+
     // Switches to the child window, verifies the url
     // then closes and switches back to the parent window
     // Params: String parentWindow
