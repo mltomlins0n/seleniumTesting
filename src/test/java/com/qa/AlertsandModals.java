@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.After;
 
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -246,6 +247,37 @@ public class AlertsandModals {
         // Text to match against is hard coded as there is no way to store
         // the input text from an alert apparently
         assert(promptText.equalsIgnoreCase("You have entered 'Arthur Dent' !"));
+    }
+
+    @Test
+    public void fileDownload() throws InterruptedException {
+        driver.get("https://www.seleniumeasy.com/test/generate-file-to-download-demo.html");
+
+        WebElement textBox = driver.findElement(By.id("textbox"));
+        textBox.click();
+        textBox.sendKeys("... No, don’t move,’ he added as Arthur began to uncurl himself, " +
+                            "‘you’d better be prepared for the jump into hyperspace. It’s unpleasantly like being drunk.’ " +
+                            "‘What’s so unpleasant about being drunk?’ " +
+                            "‘You ask a glass of water.’ " +
+                            "Arthur thought about this. " +
+                            "‘Ford,’ he said. " +
+                            "‘Yeah?’ " +
+                            "‘What’s this fish doing in my ear?’ ");
+
+        ReentrantLock lock = new ReentrantLock();
+        // Using a lock here for a wait(), and for learning purposes
+        try {
+            lock.lock();
+            textBox.wait(2000);
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+        WebElement generateFileButton = driver.findElement(By.id("create"));
+        generateFileButton.click();
+        // TODO - handle file download and read
+
     }
 
     // Switches to the child window, verifies the url
