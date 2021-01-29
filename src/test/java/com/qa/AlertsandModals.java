@@ -4,9 +4,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.After;
 
+import java.io.File;
 import java.util.Map;
 import java.util.List;
-import java.io.InputStream;
+import java.util.Scanner;
 import java.util.Hashtable;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -17,10 +18,10 @@ import static org.junit.Assert.assertFalse;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import static org.hamcrest.MatcherAssert.assertThat;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class AlertsandModals {
     private WebDriver driver;
@@ -266,10 +267,10 @@ public class AlertsandModals {
         WebElement textBox = driver.findElement(By.id("textbox"));
         textBox.click();
         textBox.sendKeys("... No, don’t move,’ he added as Arthur began to uncurl himself, "
-                + "‘you’d better be prepared for the jump into hyperspace. It’s unpleasantly like being drunk.’ "
-                + "‘What’s so unpleasant about being drunk?’ " + "‘You ask a glass of water.’ "
-                + "Arthur thought about this. " + "‘Ford,’ he said. " + "‘Yeah?’ "
-                + "‘What’s this fish doing in my ear?’");
+            + "‘you’d better be prepared for the jump into hyperspace. It’s unpleasantly like being drunk.’ "
+            + "‘What’s so unpleasant about being drunk?’ " + "‘You ask a glass of water.’ "
+            + "Arthur thought about this. " + "‘Ford,’ he said. " + "‘Yeah?’ "
+            + "‘What’s this fish doing in my ear?’");
 
         WebElement generateFileButton = driver.findElement(By.id("create"));
         generateFileButton.click();
@@ -289,7 +290,18 @@ public class AlertsandModals {
                 lock.unlock();
             }
         }
-        // TODO - Read from downloaded file
+        try {
+            // Get file from downloads
+            File file = new File("C:\\Users\\Martin\\Documents\\GitHub\\seleniumTesting\\src\\test\\java\\resources\\easyinfo.txt");
+            Scanner sc = new Scanner(file);
+            while (sc.hasNextLine()) {
+                System.out.println(sc.nextLine());
+            }
+            sc.close();
+            file.delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Switches to the child window, verifies the url
