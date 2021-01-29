@@ -4,7 +4,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.After;
 
+import java.util.Map;
 import java.util.List;
+import java.io.InputStream;
+import java.util.Hashtable;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.openqa.selenium.By;
@@ -13,6 +16,8 @@ import org.openqa.selenium.WebElement;
 import static org.junit.Assert.assertFalse;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -24,9 +29,15 @@ public class AlertsandModals {
 
     @Before
     public void setUp() {
-        System.setProperty("webdriver.chrome.driver", 
-                           "src/test/java/resources/chromedriver.exe");
-        driver = new ChromeDriver();
+        System.setProperty("webdriver.chrome.driver", "src/test/java/resources/chromedriver.exe");
+        Map<String, Object> preferences = new Hashtable<String, Object>();
+        String downloadPath = "C:\\Users\\Martin\\Documents\\GitHub\\seleniumTesting\\src\\test\\java\\resources";
+        preferences.put("download.default_directory", downloadPath);
+        ChromeOptions options = new ChromeOptions();
+        options.setExperimentalOption("prefs", (preferences));
+        DesiredCapabilities cap = DesiredCapabilities.chrome();
+        cap.setCapability(ChromeOptions.CAPABILITY, options);
+        driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, 10);
         js = (JavascriptExecutor) driver;
@@ -204,11 +215,10 @@ public class AlertsandModals {
                 button.click();
                 wait.until(ExpectedConditions.alertIsPresent());
                 driver.switchTo().alert();
+            } catch (Exception e) {
+
             }
-            catch (Exception e) {
-                
-            }
-        }   
+        }
     }
 
     // JavaScript Alerts
@@ -217,16 +227,16 @@ public class AlertsandModals {
         driver.get("https://www.seleniumeasy.com/test/javascript-alert-box-demo.html");
 
         // JavaScript alert box
-        WebElement alertButton = driver.findElement(By.cssSelector(
-            "#easycont > div > div.col-md-6.text-left > div:nth-child(4) > div.panel-body > button"));
+        WebElement alertButton = driver.findElement(By
+                .cssSelector("#easycont > div > div.col-md-6.text-left > div:nth-child(4) > div.panel-body > button"));
         alertButton.click();
         wait.until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert().accept();
 
         // JavaScript confirm box
         WebElement confirmText = driver.findElement(By.id("confirm-demo"));
-        WebElement confirmButton = driver.findElement(By.cssSelector(
-            "#easycont > div > div.col-md-6.text-left > div:nth-child(5) > div.panel-body > button"));
+        WebElement confirmButton = driver.findElement(By
+                .cssSelector("#easycont > div > div.col-md-6.text-left > div:nth-child(5) > div.panel-body > button"));
         confirmButton.click();
         wait.until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert().accept();
@@ -237,8 +247,8 @@ public class AlertsandModals {
         assert(confirmText.getText().equalsIgnoreCase("You pressed Cancel!"));
 
         // JavaScript alert box
-        WebElement promptButton = driver.findElement(By.cssSelector(
-            "#easycont > div > div.col-md-6.text-left > div:nth-child(6) > div.panel-body > button"));
+        WebElement promptButton = driver.findElement(By
+                .cssSelector("#easycont > div > div.col-md-6.text-left > div:nth-child(6) > div.panel-body > button"));
         promptButton.click();
         wait.until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert().sendKeys("Arthur Dent");
@@ -255,29 +265,31 @@ public class AlertsandModals {
 
         WebElement textBox = driver.findElement(By.id("textbox"));
         textBox.click();
-        textBox.sendKeys("... No, don’t move,’ he added as Arthur began to uncurl himself, " +
-                            "‘you’d better be prepared for the jump into hyperspace. It’s unpleasantly like being drunk.’ " +
-                            "‘What’s so unpleasant about being drunk?’ " +
-                            "‘You ask a glass of water.’ " +
-                            "Arthur thought about this. " +
-                            "‘Ford,’ he said. " +
-                            "‘Yeah?’ " +
-                            "‘What’s this fish doing in my ear?’ ");
+        textBox.sendKeys("... No, don’t move,’ he added as Arthur began to uncurl himself, "
+                + "‘you’d better be prepared for the jump into hyperspace. It’s unpleasantly like being drunk.’ "
+                + "‘What’s so unpleasant about being drunk?’ " + "‘You ask a glass of water.’ "
+                + "Arthur thought about this. " + "‘Ford,’ he said. " + "‘Yeah?’ "
+                + "‘What’s this fish doing in my ear?’");
+
+        WebElement generateFileButton = driver.findElement(By.id("create"));
+        generateFileButton.click();
+
+        WebElement downloadButton = driver.findElement(By.id("link-to-download"));
+        wait.until(ExpectedConditions.elementToBeClickable(downloadButton)).click();
 
         ReentrantLock lock = new ReentrantLock();
         // Using a lock here for a wait(), and for learning purposes
-        try {
-            lock.lock();
-            textBox.wait(2000);
-        } catch(Exception e) {
-            e.printStackTrace();
-        } finally {
-            lock.unlock();
+        synchronized (textBox) {
+            try {
+                lock.lock();
+                textBox.wait(1000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
         }
-        WebElement generateFileButton = driver.findElement(By.id("create"));
-        generateFileButton.click();
-        // TODO - handle file download and read
-
+        // TODO - Read from downloaded file
     }
 
     // Switches to the child window, verifies the url
