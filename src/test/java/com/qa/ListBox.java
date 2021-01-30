@@ -11,11 +11,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ListBox {
     private WebDriver driver;
-    private WebDriverWait wait;
 
     @Before
     public void setUp() {
@@ -23,7 +21,6 @@ public class ListBox {
             "src/test/java/resources/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        wait = new WebDriverWait(driver, 10);
         driver.get("https://www.seleniumeasy.com/test/bootstrap-dual-list-box-demo.html");
     }
 
@@ -42,7 +39,6 @@ public class ListBox {
         WebElement leftListBox = driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[1]/div/ul"));
         List <WebElement> leftList = leftListBox.findElements(By.className("list-group-item"));
         
-        
         for (WebElement item : leftList) {
             item.click();
         }
@@ -53,17 +49,7 @@ public class ListBox {
         List <WebElement> leftList3 = leftListBox.findElements(By.className("list-group-item"));
         assert(leftList3.size()==5);
 
-        ReentrantLock lock = new ReentrantLock();
-        synchronized(leftList) {
-            try {
-                lock.lock();
-                Thread.sleep(1000);
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                lock.unlock();
-            }
-        }
+        //wait(leftListBox, 500);
     }
 
     @Test
@@ -75,9 +61,6 @@ public class ListBox {
         WebElement rightListBox = driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[3]/div/ul"));
         List <WebElement> rightList = rightListBox.findElements(By.className("list-group-item"));
 
-        WebElement leftSearchBox = driver.findElement(By.cssSelector("#listhead > div.col-md-10 > div > input"));
-        WebElement rightSearchBox = driver.findElement(By.cssSelector("#listhead > div.col-md-10 > div > input"));
-
         for (WebElement item : rightList) {
             item.click();
         }
@@ -88,17 +71,7 @@ public class ListBox {
         List <WebElement> rightList3 = rightListBox.findElements(By.className("list-group-item"));
         assert(rightList3.size()==5);
 
-        ReentrantLock lock = new ReentrantLock();
-        synchronized(rightList) {
-            try {
-                lock.lock();
-                Thread.sleep(1000);
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                lock.unlock();
-            }
-        }
+        //wait(rightListBox, 500);
     }
 
     @Test
@@ -107,30 +80,18 @@ public class ListBox {
             "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div > div.list-arrows.col-md-1.text-center > button.btn.btn-default.btn-sm.move-left"));
         WebElement moveRightButton = driver.findElement(By.cssSelector(
             "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div > div.list-arrows.col-md-1.text-center > button.btn.btn-default.btn-sm.move-right"));
-
         WebElement leftListBox = driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[1]/div/ul"));
-        List <WebElement> leftList = leftListBox.findElements(By.className("list-group-item"));
         WebElement leftAllButton = driver.findElement(By.cssSelector("#listhead > div.col-md-2 > div > a"));
         
         leftAllButton.click();
         moveRightButton.click();
-        List <WebElement> leftList2 = leftListBox.findElements(By.className("list-group-item"));
-        assert(leftList2.isEmpty());
+        List <WebElement> leftList = leftListBox.findElements(By.className("list-group-item"));
+        assert(leftList.isEmpty());
         moveLeftButton.click();
-        List <WebElement> leftList3 = leftListBox.findElements(By.className("list-group-item"));
-        assert(leftList3.size()==5);
+        List <WebElement> leftList2 = leftListBox.findElements(By.className("list-group-item"));
+        assert(leftList2.size()==5);
 
-        ReentrantLock lock = new ReentrantLock();
-        synchronized(leftList) {
-            try {
-                lock.lock();
-                Thread.sleep(1000);
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                lock.unlock();
-            }
-        }
+        //wait(leftListBox, 500);
     }
 
     @Test
@@ -139,24 +100,78 @@ public class ListBox {
             "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div > div.list-arrows.col-md-1.text-center > button.btn.btn-default.btn-sm.move-left"));
         WebElement moveRightButton = driver.findElement(By.cssSelector(
             "body > div.container-fluid.text-center > div > div.col-md-6.text-left > div > div.list-arrows.col-md-1.text-center > button.btn.btn-default.btn-sm.move-right"));
-
         WebElement rightListBox = driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[3]/div/ul"));
-        List <WebElement> rightList = rightListBox.findElements(By.className("list-group-item"));
         WebElement rightAllButton = driver.findElement(By.xpath("//*[@id='listhead']/div[1]/div/a"));
         
         rightAllButton.click();
         moveLeftButton.click();
-        List <WebElement> rightList2 = rightListBox.findElements(By.className("list-group-item"));
-        assert(rightList2.isEmpty());
+        List <WebElement> rightList = rightListBox.findElements(By.className("list-group-item"));
+        assert(rightList.isEmpty());
         moveRightButton.click();
-        List <WebElement> rightList3 = rightListBox.findElements(By.className("list-group-item"));
-        assert(rightList3.size()==5);
+        List <WebElement> rightList2 = rightListBox.findElements(By.className("list-group-item"));
+        assert(rightList2.size()==5);
 
+        //wait(rightListBox, 500);
+    }
+
+    @Test
+    public void searchBars() {
+        WebElement leftSearchBox = driver.findElement(By.cssSelector("#listhead > div.col-md-10 > div > input"));
+        WebElement rightSearchBox = driver.findElement(By.xpath("//*[@id='listhead']/div[2]/div/input"));
+        WebElement leftListBox = driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[1]/div/ul"));
+        WebElement rightListBox = driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[3]/div/ul"));
+        List <WebElement> leftList = leftListBox.findElements(By.className("list-group-item"));
+        List <WebElement> rightList = rightListBox.findElements(By.className("list-group-item"));
+
+        // Left search box tests
+        leftSearchBox.sendKeys("boot");
+        // number of list items displayed
+        int itemCount = 0;
+        for (WebElement item : leftList) {
+            if (item.isDisplayed()) {
+                itemCount++;
+            }
+        }
+        assert(itemCount==1);
+
+        leftSearchBox.clear();
+        leftSearchBox.sendKeys("dfgkuh"); // nonsense search to ensure no results
+        itemCount = 0;
+        for (WebElement item : leftList) {
+            if (item.isDisplayed()) {
+                itemCount++;
+            }
+        }
+        assert(itemCount==0);
+
+        // Right search box tests
+        rightSearchBox.sendKeys("ac");
+        // number of list items displayed
+        for (WebElement item : rightList) {
+            if (item.isDisplayed()) {
+                itemCount++;
+            }
+        }
+        assert(itemCount==2);
+
+        rightSearchBox.clear();
+        rightSearchBox.sendKeys("dfgkuh"); // nonsense search to ensure no results
+        itemCount = 0;
+        for (WebElement item : rightList) {
+            if (item.isDisplayed()) {
+                itemCount++;
+            }
+        }
+        assert(itemCount==0);
+        //wait(leftListBox, 500);
+    }
+
+    public void wait(WebElement elem, int duration) {
         ReentrantLock lock = new ReentrantLock();
-        synchronized(rightList) {
+        synchronized(elem) {
             try {
                 lock.lock();
-                Thread.sleep(1000);
+                Thread.sleep(duration);
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
