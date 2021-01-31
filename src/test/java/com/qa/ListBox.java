@@ -49,7 +49,7 @@ public class ListBox {
         List <WebElement> leftList3 = leftListBox.findElements(By.className("list-group-item"));
         assert(leftList3.size()==5);
 
-        //wait(leftListBox, 500);
+        //wait(500);
     }
 
     @Test
@@ -71,7 +71,7 @@ public class ListBox {
         List <WebElement> rightList3 = rightListBox.findElements(By.className("list-group-item"));
         assert(rightList3.size()==5);
 
-        //wait(rightListBox, 500);
+        //wait(500);
     }
 
     @Test
@@ -91,7 +91,7 @@ public class ListBox {
         List <WebElement> leftList2 = leftListBox.findElements(By.className("list-group-item"));
         assert(leftList2.size()==5);
 
-        //wait(leftListBox, 500);
+        //wait(500);
     }
 
     @Test
@@ -111,7 +111,7 @@ public class ListBox {
         List <WebElement> rightList2 = rightListBox.findElements(By.className("list-group-item"));
         assert(rightList2.size()==5);
 
-        //wait(rightListBox, 500);
+        //wait(500);
     }
 
     @Test
@@ -163,12 +163,16 @@ public class ListBox {
             }
         }
         assert(itemCount==0);
-        //wait(leftListBox, 500);
+        //wait(500);
     }
 
-    public void wait(WebElement elem, int duration) {
+    // Wait function using a reentrant lock to avoid
+    // "Thread is not current owner" exceptions
+    // Params: int duration
+    // The amount of time to wait in ms
+    public void wait(int duration) {
         ReentrantLock lock = new ReentrantLock();
-        synchronized(elem) {
+        synchronized(this) {
             try {
                 lock.lock();
                 Thread.sleep(duration);
