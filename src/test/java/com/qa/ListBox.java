@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.After;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.openqa.selenium.By;
@@ -206,6 +207,35 @@ public class ListBox {
         removeAllButton.click();
         Select leftList4 = new Select(driver.findElement(By.cssSelector("#pickList > div > div:nth-child(1) > select")));
         assert(leftList4.getOptions().size() == 15);
+    }
+
+    // Data list filter tests
+    @Test
+    public void dataList() {
+        driver.get("https://www.seleniumeasy.com/test/data-list-filter-demo.html");
+        WebElement searchBox = driver.findElement(By.id("input-search"));
+        WebElement staffContainer = driver.findElement(By.className("searchable-container"));
+        // Selects any divs containing the text inside apostrophies ''
+        List <WebElement> staffList = staffContainer.findElements(By.cssSelector("div[class*='items col-xs-12']"));
+        List <WebElement> searchResults = new ArrayList <WebElement>();
+
+        searchBox.sendKeys("pho ");
+        for (WebElement staff : staffList) {
+            if (staff.isDisplayed()) {
+                searchResults.add(staff);
+            }
+        }
+        assert(searchResults.size() == 2);
+        searchResults.clear();
+        searchBox.clear();
+        // nonsense search to return no results
+        searchBox.sendKeys("szfg");
+        for (WebElement staff : staffList) {
+            if (staff.isDisplayed()) {
+                searchResults.add(staff);
+            }
+        }
+        assert(searchResults.isEmpty());
     }
 
     // Wait function using a reentrant lock to avoid
