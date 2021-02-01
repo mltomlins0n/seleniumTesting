@@ -11,6 +11,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
 
 public class ListBox {
     private WebDriver driver;
@@ -29,7 +30,7 @@ public class ListBox {
         driver.quit();
     }
 
-    // Bootstrap list box tests
+    // Bootstrap List Box tests
     @Test
     public void leftListBox() {
         WebElement moveLeftButton = driver.findElement(By.cssSelector(
@@ -164,6 +165,39 @@ public class ListBox {
         }
         assert(itemCount==0);
         //wait(500);
+    }
+
+    // JQuery List Box tests
+    @Test
+    public void leftJQueryBox() {
+        driver.get("https://www.seleniumeasy.com/test/jquery-dual-list-box-demo.html");
+        Select leftList = new Select(driver.findElement(By.cssSelector("#pickList > div > div:nth-child(1) > select")));
+        List <WebElement> leftListOptions = leftList.getOptions();
+        WebElement addButton = driver.findElement(By.cssSelector(
+            "#pickList > div > div.col-sm-2.pickListButtons > button.pAdd.btn.btn-primary.btn-sm"));
+        WebElement addAllButton = driver.findElement(By.cssSelector(
+            "#pickList > div > div.col-sm-2.pickListButtons > button.pAddAll.btn.btn-primary.btn-sm"));
+        WebElement removeButton = driver.findElement(By.cssSelector(
+            "#pickList > div > div.col-sm-2.pickListButtons > button.pRemove.btn.btn-primary.btn-sm"));
+        WebElement removeAllButton = driver.findElement(By.cssSelector(
+            "#pickList > div > div.col-sm-2.pickListButtons > button.pRemoveAll.btn.btn-primary.btn-sm"));
+        
+        leftList.selectByIndex(0);
+        addButton.click();
+        leftList.selectByIndex(1);
+        leftList.selectByIndex(2);
+        leftList.selectByIndex(10);
+        addButton.click();
+        Select leftList2 = new Select(driver.findElement(By.cssSelector("#pickList > div > div:nth-child(1) > select")));
+        assert(leftList2.getOptions().size() == 11);
+
+        addAllButton.click();
+        Select leftList3 = new Select(driver.findElement(By.cssSelector("#pickList > div > div:nth-child(1) > select")));
+        assert(leftList3.getOptions().size() == 0);
+
+        removeAllButton.click();
+        Select leftList4 = new Select(driver.findElement(By.cssSelector("#pickList > div > div:nth-child(1) > select")));
+        assert(leftList4.getOptions().size() == 15);
     }
 
     // Wait function using a reentrant lock to avoid
