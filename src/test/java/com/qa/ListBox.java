@@ -172,7 +172,7 @@ public class ListBox {
     public void leftJQueryBox() {
         driver.get("https://www.seleniumeasy.com/test/jquery-dual-list-box-demo.html");
         Select leftList = new Select(driver.findElement(By.cssSelector("#pickList > div > div:nth-child(1) > select")));
-        List <WebElement> leftListOptions = leftList.getOptions();
+        Select rightList = new Select(driver.findElement(By.cssSelector("#pickList > div > div:nth-child(3) > select")));
         WebElement addButton = driver.findElement(By.cssSelector(
             "#pickList > div > div.col-sm-2.pickListButtons > button.pAdd.btn.btn-primary.btn-sm"));
         WebElement addAllButton = driver.findElement(By.cssSelector(
@@ -194,6 +194,14 @@ public class ListBox {
         addAllButton.click();
         Select leftList3 = new Select(driver.findElement(By.cssSelector("#pickList > div > div:nth-child(1) > select")));
         assert(leftList3.getOptions().size() == 0);
+        assert(rightList.getOptions().size() == 15);
+
+        rightList.selectByIndex(0);
+        rightList.selectByIndex(6);
+        rightList.selectByIndex(12);
+        removeButton.click();
+        Select rightList2 = new Select(driver.findElement(By.cssSelector("#pickList > div > div:nth-child(3) > select")));
+        assert(rightList2.getOptions().size() == 12);
 
         removeAllButton.click();
         Select leftList4 = new Select(driver.findElement(By.cssSelector("#pickList > div > div:nth-child(1) > select")));
